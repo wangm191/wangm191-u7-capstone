@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ear_Tracker.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ear_Tracker.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Ear_Tracker.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Ear_Tracker.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Ear_Tracker.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Ear_Tracker.test.iml" />
     </modules>
   </component>
 </project>
