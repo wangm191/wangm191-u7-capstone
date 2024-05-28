@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/hub.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        body {
+            background-color: lightgrey; /* Set background color to light grey */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .header {
+            width: 100%;
+            background-color: white;
+            text-align: center;
+            padding: 20px 0;
+            }
+
+        .logoutButton {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<header class="header" id="header"></header>
+<div class="container">
+    <h2>Set Monthly Target</h2>
+    <div class="form-area">
+        <form id="targetForm">
+            <label for="month">Select Month:</label>
+            <input type="text" id="month" name="month" placeholder="For example:2024-04">
+            <label for="target">Enter Target:</label>
+            <input type="number" id="target" name="target" placeholder="For example: 1500" min="0">
+            <a href="#" class="button" id="submit">Submit</a>
+            <a href="#" class="button" id="delete">Delete</a>
+            <a href="#" class="button" id="table">Show the Table</a>
+        </form>
+    </div>
+
+    <h2>Add New Tracker</h2>
+    <div class="form-area2">
+        <form id="trackerForm">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" placeholder="For example: 2024-04-01">
+            <label for="jobType">Enter Job Type:</label>
+            <input type="text" id="jobType" name="jobType" placeholder="For example: uber">
+            <label for="hoursWorked">Enter Hours Worked</label>
+            <input type="number" id="hoursWorked" name="hoursWorked" placeholder="For example: 8 ">
+            <label for="totalEarnings">Enter Total Earnings</label>
+            <input type="number" id="totalEarnings" name="totalEarnings" placeholder="For example: 200">
+            <a href="#" class="button" id="addTracker">Submit</a>
+        </form>
+    </div>
+    <h2>Compare Job Types</h2>
+    <div class="card">
+        <h3 id="compareJobTypes-jobName"></h3>
+        <label for="date">Select Date:</label>
+        <input type="date" id="compareDate" name="date" placeholder="For example: 2024-04-01">
+        <div class ="compareJobTypes" id="compareJobTypesId"></div>
+        <a href="#" class="button" id="compareJobTypes">Compare Jobs</a>
+        <ul id="jobs"></ul>
+    </div>
+</div>
+
+</body>
+
+</html>
