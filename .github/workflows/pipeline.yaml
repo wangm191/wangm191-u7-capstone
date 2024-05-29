@@ -9,10 +9,10 @@ on:
 env:
 
   # STUDENTS: Set these environment variables 
-  API_BASE_URL: https://uayo3g38uh.execute-api.us-east-2.amazonaws.com/Prod/
-  COGNITO_DOMAIN: project-eartracker-myles-wang.auth.us-east-2.amazoncognito.com
-  COGNITO_REDIRECT_SIGNIN: https://d1mu8ljut1v7pp.cloudfront.net
-  COGNITO_REDIRECT_SIGNOUT:  https://d1mu8ljut1v7pp.cloudfront.net
+  API_BASE_URL: https://mtvqvfvisb.execute-api.us-east-2.amazonaws.com/Prod/
+  COGNITO_DOMAIN: project-eartracker-myles-wang
+  COGNITO_REDIRECT_SIGNIN:  https://d2ho6we4xa7hdv.cloudfront.net
+  COGNITO_REDIRECT_SIGNOUT: https://d2ho6we4xa7hdv.cloudfront.net
 
   COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
   COGNITO_USER_POOL_CLIENT_ID: ${{ secrets.COGNITO_USER_POOL_CLIENT_ID }}
@@ -25,9 +25,9 @@ env:
   SAM_TEMPLATE: template.yaml
 
   STACK_NAME: ear-tracker
-  PIPELINE_EXECUTION_ROLE: arn:aws:iam::891377038958:role/aws-sam-cli-managed-ServiceSt-PipelineExecutionRole-uYuzYO6hw2on
-  CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::891377038958:role/aws-sam-cli-managed-Servi-CloudFormationExecutionRo-qLlyK5Jl6k5d
-  ARTIFACTS_BUCKET: aws-sam-cli-managed-servicestage-p-artifactsbucket-vr35geu4ddze
+  PIPELINE_EXECUTION_ROLE: arn:aws:iam::891377038958:role/aws-sam-cli-managed-ServiceSt-PipelineExecutionRole-FTTNeTvDEfiC
+  CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::891377038958:role/aws-sam-cli-managed-Servi-CloudFormationExecutionRo-OsC9oYmkFMnI
+  ARTIFACTS_BUCKET: aws-sam-cli-managed-servicestage-p-artifactsbucket-3usegcokdekw
   REGION: us-east-2
 
 jobs:
