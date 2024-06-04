@@ -449,7 +449,42 @@ Resources:
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
-  
+
+  ListeningSessionTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "email"
+          AttributeType: "S"
+        - AttributeName: "startSession"
+          AttributeType: "S"
+        - AttributeName: "endSession"
+          AttributeType: "S"
+        - AttributeName: "listeningType"
+          AttributeType: "S"
+        - AttributeName: "timeElapsed"
+          AttributeType: "N"
+        - AttributeName: "notes"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "email"
+          KeyType: "HASH"
+      TableName: "listeningSession"
+      BillingMode: "PAY_PER_REQUEST"
+      GlobalSecondaryIndexes:
+        - IndexName: "EmailAndStartSessionIndex"
+          KeySchema:
+            - AttributeName: "startSession"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
+        - IndexName: "EmailAndListeningTypeIndex"
+          KeySchema:
+            - AttributeName: "listeningType"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
+
 #
 #-----------------------------------------------------
 # The outputs defined below will be printed
