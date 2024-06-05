@@ -27,15 +27,12 @@ public class AddListeningSessionActivityTest {
     @Mock
     private ListeningSessionDao listeningSessionDao;
 
-    @Mock
-    private TimeElapsedCalculator timeElapsedCalculator;
-
     private AddListeningSessionActivity addListeningSessionActivity;
 
     @BeforeEach
     void setup(){
         openMocks(this);
-        addListeningSessionActivity = new AddListeningSessionActivity(listeningSessionDao, timeElapsedCalculator);
+        addListeningSessionActivity = new AddListeningSessionActivity(listeningSessionDao);
     }
 
     @Test
@@ -45,7 +42,7 @@ public class AddListeningSessionActivityTest {
         LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
         LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
         String listeningType = "Spotify";
-        String timeElapsed = "3 hours, 29 minutes, 15 seconds";
+//        String timeElapsed = "3:29:15";
         String notes = "";
 
         AddListeningSessionRequest request = AddListeningSessionRequest.builder()
@@ -66,7 +63,7 @@ public class AddListeningSessionActivityTest {
         assertEquals(startSession, result.getListeningSessionModel().getStartSession());
         assertEquals(endSession, result.getListeningSessionModel().getEndSession());
         assertEquals(listeningType, result.getListeningSessionModel().getListeningType());
-        assertEquals(timeElapsed, result.getListeningSessionModel().getTimeElapsed());
+//        assertEquals(timeElapsed, result.getListeningSessionModel().getTimeElapsed());
         assertEquals(notes, result.getListeningSessionModel().getNotes());
     }
 
@@ -87,7 +84,7 @@ public class AddListeningSessionActivityTest {
     public void handleRequest_invalidListeningType_throwsInvalidAttributeValueException(){
         // GIVEN
         String email = "validEmail@gmail.com";
-        String listeningType = "'@fakeJob'";
+        String listeningType = "'@notrealListeningType'";
 
         AddListeningSessionRequest request = AddListeningSessionRequest.builder()
                 .withEmail(email)

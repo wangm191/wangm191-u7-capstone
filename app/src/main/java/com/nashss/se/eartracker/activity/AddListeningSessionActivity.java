@@ -4,6 +4,7 @@ import com.nashss.se.eartracker.activity.request.AddListeningSessionRequest;
 import com.nashss.se.eartracker.activity.result.AddListeningSessionResult;
 import com.nashss.se.eartracker.calculator.TimeElapsedCalculator;
 import com.nashss.se.eartracker.converters.ModelConverter;
+import com.nashss.se.eartracker.dependency.ServiceComponent;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
 import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
@@ -20,12 +21,9 @@ public class AddListeningSessionActivity {
     private final Logger log = LogManager.getLogger();
     private final ListeningSessionDao listeningSessionDao;
 
-    private final TimeElapsedCalculator timeElapsedCalculator;
-
     @Inject
-    public AddListeningSessionActivity(ListeningSessionDao listeningSessionDao, TimeElapsedCalculator timeElapsedCalculator) {
+    public AddListeningSessionActivity(ListeningSessionDao listeningSessionDao) {
         this.listeningSessionDao = listeningSessionDao;
-        this.timeElapsedCalculator = timeElapsedCalculator;
     }
 
     public AddListeningSessionResult handleRequest(final AddListeningSessionRequest addListeningSessionRequest){
@@ -42,6 +40,7 @@ public class AddListeningSessionActivity {
         validNotes = addListeningSessionRequest.getNotes();
     }
 
+    TimeElapsedCalculator timeElapsedCalculator = new TimeElapsedCalculator();
     ListeningSession listeningSession = new ListeningSession();
 
     listeningSession.setEmail(addListeningSessionRequest.getEmail());

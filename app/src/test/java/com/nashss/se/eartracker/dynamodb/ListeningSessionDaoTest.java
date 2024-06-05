@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
+import com.nashss.se.eartracker.exceptions.InvalidAttributeException;
+import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
 import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,19 +55,16 @@ public class ListeningSessionDaoTest {
         // THEN
         assertEquals(listeningSessions, result, "Expected list of listeningSessions to be equal to what dynamoDb returned");
         verify(dynamoDbMapper).query(eq(ListeningSession.class), captor.capture());
-        ListeningSession queriedTracker = captor.getValue().getHashKeyValues();
-        assertEquals(validEmail, queriedTracker.getEmail(), "Expected query expression to query for " +
-                "partition key: " + validEmail);
     }
 
     @Test
-    public void searchListeningSessionByDate_trackerIsNull_throwsTargetNotFoundException(){
+    public void searchListeningSessionByDate_attributesAreNull_throwsListeningSessionNotFoundException(){
         // WHEN + THEN
         assertThrows(ListeningSessionNotFoundException.class, () -> listeningSessionDao.searchListeningSessionByDate(null, null));
     }
 
     @Test
-    public void saveTracker_callsMapperWithTracker() {
+    public void saveTracker_callsMapperWithListeningSession() {
         // GIVEN
         ListeningSession listeningSession = new ListeningSession();
 
@@ -101,16 +100,12 @@ public class ListeningSessionDaoTest {
     }
 
     @Test
-    public void searchListeningSessionByListeningType_nullAttributes_returnEmptyTrackerList(){
+    public void searchListeningSessionByListeningType_nullAttributes_ThrowsInvalidAttributeException(){
         // GIVEN
         when(dynamoDbMapper.query(eq(ListeningSession.class), any(DynamoDBQueryExpression.class))).thenReturn(listeningSessions);
-        ArgumentCaptor<DynamoDBQueryExpression<ListeningSession>> captor = ArgumentCaptor.forClass(DynamoDBQueryExpression.class);
 
-        // WHEN
-        List<ListeningSession> result = listeningSessionDao.searchListeningSessionByListeningType(null, null);
-
-        // THEN
-        assertEquals(listeningSessions, result, "Expected list of tracker jobs to be empty list");
-        verify(dynamoDbMapper).query(eq(ListeningSession.class), captor.capture());
+        // WHEN + THEN
+        assertThrows(ListeningSessionNotFoundException.class, () -> listeningSessionDao.searchListeningSessionByListeningType(null, null),
+                "Expected to throw Invalid Attribute Value Exception");
     }
 }

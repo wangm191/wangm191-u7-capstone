@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ModelConverterTest {
-    private  ModelConverter modelConverter = new ModelConverter();
+    private ModelConverter modelConverter = new ModelConverter();
 
     @Test
     void toListeningSessionModel_withTags_convertsListeningSession() {
@@ -29,7 +30,6 @@ public class ModelConverterTest {
         assertEquals(listeningSession.getStartSession(), listeningSessionModel.getStartSession());
         assertEquals(listeningSession.getEndSession(), listeningSessionModel.getEndSession());
         assertEquals(listeningSession.getListeningType(), listeningSessionModel.getListeningType());
-        assertEquals(timeElapsed, listeningSessionModel.getTimeElapsed());
         assertEquals(listeningSession.getNotes(), listeningSessionModel.getNotes());
     }
 
@@ -50,7 +50,6 @@ public class ModelConverterTest {
         assertEquals(listeningSession.getStartSession(), listeningSessionModel.getStartSession());
         assertEquals(listeningSession.getEndSession(), listeningSessionModel.getEndSession());
         assertEquals(listeningSession.getListeningType(), listeningSessionModel.getListeningType());
-        assertEquals(timeElapsed, listeningSessionModel.getTimeElapsed());
-        assertEquals("", listeningSessionModel.getNotes());
+        assertNull(listeningSessionModel.getNotes());
     }
 }

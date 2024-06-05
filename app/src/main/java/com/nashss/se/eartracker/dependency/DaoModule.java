@@ -1,5 +1,7 @@
 package com.nashss.se.eartracker.dependency;
 
+import com.nashss.se.eartracker.activity.AddListeningSessionActivity;
+import com.nashss.se.eartracker.calculator.TimeElapsedCalculator;
 import com.nashss.se.eartracker.dynamodb.DynamoDbClientProvider;
 
 import com.amazonaws.regions.Regions;
@@ -8,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 
 import javax.inject.Singleton;
+import java.time.LocalDateTime;
 
 /**
  * Dagger Module providing dependencies for DAO classes.
