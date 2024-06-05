@@ -97,7 +97,7 @@ public class ListeningSessionDao {
      * @param listeningType is the String listeningType that needs to be queried.
      * @return a List of {@Link ListeningSessions} that match the search after queried .
      */
-    public List<ListeningSession> getListeningSessionByListeningType(String email, String listeningType) {
+    public List<ListeningSession> searchListeningSessionByListeningType(String email, String listeningType) {
         if (email == null){
             throw new ListeningSessionNotFoundException("error: Missing email, cannot find Listening Session. ");
         }

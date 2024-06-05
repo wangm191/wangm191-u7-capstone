@@ -23,7 +23,7 @@ public class AddListeningSessionActivity {
     private final TimeElapsedCalculator timeElapsedCalculator;
 
     @Inject
-    private AddListeningSessionActivity(ListeningSessionDao listeningSessionDao, TimeElapsedCalculator timeElapsedCalculator) {
+    public AddListeningSessionActivity(ListeningSessionDao listeningSessionDao, TimeElapsedCalculator timeElapsedCalculator) {
         this.listeningSessionDao = listeningSessionDao;
         this.timeElapsedCalculator = timeElapsedCalculator;
     }
@@ -37,6 +37,11 @@ public class AddListeningSessionActivity {
     if (!ListeningSessionAndTypeServiceUtils.isValidString(addListeningSessionRequest.getListeningType())) {
         throw new InvalidAttributeValueException("listeningType is unacceptable, please try again"); }
 
+    String validNotes = "";
+    if (addListeningSessionRequest.getNotes() != null) {
+        validNotes = addListeningSessionRequest.getNotes();
+    }
+
     ListeningSession listeningSession = new ListeningSession();
 
     listeningSession.setEmail(addListeningSessionRequest.getEmail());
@@ -44,7 +49,7 @@ public class AddListeningSessionActivity {
     listeningSession.setEndSession(addListeningSessionRequest.getEndSession());
     listeningSession.setListeningType(addListeningSessionRequest.getListeningType());
     listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(addListeningSessionRequest.getStartSession(), addListeningSessionRequest.getEndSession()));
-    listeningSession.setNotes(addListeningSessionRequest.getNotes());
+    listeningSession.setNotes(validNotes);
 
     listeningSessionDao.saveListeningSession(listeningSession);
 

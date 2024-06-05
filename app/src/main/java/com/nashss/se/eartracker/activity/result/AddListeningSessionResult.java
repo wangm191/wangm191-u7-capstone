@@ -9,7 +9,7 @@ public class AddListeningSessionResult {
         this.listeningSessionModel = listeningSessionModel;
     }
 
-    private ListeningSessionModel getListeningSessionModel() {
+    public ListeningSessionModel getListeningSessionModel() {
         return listeningSessionModel;
     }
 

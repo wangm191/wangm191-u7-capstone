@@ -3,7 +3,6 @@ package com.nashss.se.eartracker.lambda;
 import com.nashss.se.eartracker.dependency.DaggerServiceComponent;
 import com.nashss.se.eartracker.dependency.ServiceComponent;
 
-import dagger.internal.DaggerGenerated;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
