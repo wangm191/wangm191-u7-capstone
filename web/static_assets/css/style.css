@@ -26,7 +26,6 @@
 .button {
   background-color: var(--tertiary-color);
   border: none;
-  border-radius: 20px;
   color: var(--secondary-color);
   padding: 6px 8px 4px 8px;
   text-align: center;
@@ -36,7 +35,7 @@
 }
 
 .button-group {
-    display:flex;
+    display: flex;
     justify-content: space-between;
 }
 
@@ -49,11 +48,10 @@
 }
 
 .card {
-    display:inline;
-    justify-content: space-between;
     color: var(--primary-color);
-    padding: 20px 20px;
-    text-align: center;
+    background-color: var(--secondary-color);
+    margin: 20px;
+    padding: 10px 20px;
 }
 
 .error {
