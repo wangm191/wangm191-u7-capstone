@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import EarTrackerClient from '../api/earTrackerClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
@@ -16,14 +16,14 @@ class CreatePlaylist extends BindingClass {
     }
 
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header to the page and load the EarTrackerClient.
      */
     mount() {
         document.getElementById('create').addEventListener('click', this.submit);
 
         this.header.addHeaderToPage();
 
-        this.client = new MusicPlaylistClient();
+        this.client = new EarTrackerClient();
     }
 
     /**
