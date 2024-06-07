@@ -3,14 +3,14 @@ import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
 
 /**
- * Client to call the MusicPlaylistService.
+ * Client to call the EarTrackerService.
  *
  * This could be a great place to explore Mixins. Currently the client is being loaded multiple times on each page,
  * which we could avoid using inheritance or Mixins.
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
   */
-export default class MusicPlaylistClient extends BindingClass {
+export default class EarTrackerClient extends BindingClass {
 
     constructor(props = {}) {
         super();
@@ -96,6 +96,33 @@ export default class MusicPlaylistClient extends BindingClass {
         try {
             const response = await this.axiosClient.get(`playlists/${id}/songs`);
             return response.data.songList;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Add a new listeningSession owned by the current user.
+     * @param startSession the starting LocalDateTime of the current session.
+     * @param endSession the ending LocalDateTime of the current session. 
+     * @param listeningType the type of current session. 
+     * @param notes of the current session.
+     * @return The listeningSession that has been created.
+     */
+    async addListeningSession(startSession, endSession, listeningType, notes, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create listening sessions.");
+            const response = await this.axiosClient.post('listeningSessions', {
+                startSession: startSession,
+                endSession: endSession,
+                listeningType: listeningType,
+                notes: notes
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.listeningSession;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
