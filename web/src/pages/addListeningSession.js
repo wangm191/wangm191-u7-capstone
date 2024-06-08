@@ -49,10 +49,20 @@ class AddListeningSession extends BindingClass {
     /**
      * When the listening session is updated in the datastore, redirect to the view listening sessions page.
      */
-    redirectToViewPlaylist() {
+    redirectToViewListeningSession() {
         const listeningSession = this.dataStore.get('listeningSession');
         if (listeningSession != null) {
-            window.location.href = `/listeningSession.html?id=${listeningSession}`;
+            window.location.href = `/viewListeningSession.html?id=${listeningSession}`;
         }
     }
 }
+
+/**
+ * Main method to run when the page contents have loaded.
+ */
+const main = async () => {
+    const addListeningSession = new AddListeningSession();
+    addListeningSession.mount();
+};
+
+window.addEventListener('DOMContentLoaded', main);
