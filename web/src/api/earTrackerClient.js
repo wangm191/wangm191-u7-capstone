@@ -102,19 +102,18 @@ export default class EarTrackerClient extends BindingClass {
     }
 
     /**
-     * Create a new listeningSession owned by the current user.
-     * @param startSession The starting LocalDateTime of listeningSession.
-     * @param endSession The ending LocalDateTime of listeningSession.
-     * @param listeningType The type of listeningType. 
-     * @param notes included for the listeningSesison
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The listeningSession that has been created.
+     * Add a new listeningSession owned by the current user.
+     * @param startSession the starting LocalDateTime of the current session.
+     * @param endSession the ending LocalDateTime of the current session. 
+     * @param listeningType the type of current session. 
+     * @param notes of the current session.
+     * @return The listeningSession that has been created.
      */
     async addListeningSession(startSession, endSession, listeningType, notes, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
-            const response = await this.axiosClient.post(`listeningSessions`, {
-                startSession: startSession, 
+            const token = await this.getTokenOrThrow("Only authenticated users can create listening sessions.");
+            const response = await this.axiosClient.post('listeningSessions', {
+                startSession: startSession,
                 endSession: endSession,
                 listeningType: listeningType,
                 notes: notes
