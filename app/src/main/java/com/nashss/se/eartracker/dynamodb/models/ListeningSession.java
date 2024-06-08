@@ -3,7 +3,6 @@ package com.nashss.se.eartracker.dynamodb.models;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.eartracker.converters.LocalDateTimeConverter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
