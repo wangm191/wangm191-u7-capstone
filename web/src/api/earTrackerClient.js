@@ -15,7 +15,7 @@ export default class EarTrackerClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs', 'createPlaylist'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addListeningSession'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
