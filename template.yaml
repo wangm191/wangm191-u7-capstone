@@ -477,13 +477,7 @@ Resources:
           AttributeType: "S"
         - AttributeName: "startSession"
           AttributeType: "S"
-        - AttributeName: "endSession"
-          AttributeType: "S"
         - AttributeName: "listeningType"
-          AttributeType: "S"
-        - AttributeName: "timeElapsed"
-          AttributeType: "S"
-        - AttributeName: "notes"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "email"
