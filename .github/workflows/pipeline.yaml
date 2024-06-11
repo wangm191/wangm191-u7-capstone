@@ -24,7 +24,7 @@ env:
   PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SAM_TEMPLATE: template.yaml
 
-  STACK_NAME: ear-tracker-service
+  STACK_NAME: ear-tracker
   PIPELINE_EXECUTION_ROLE: arn:aws:iam::891377038958:role/aws-sam-cli-managed-ServiceSt-PipelineExecutionRole-gkEn9FcuFLvs
   CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::891377038958:role/aws-sam-cli-managed-Servi-CloudFormationExecutionRo-Mzbmo6WBtGTG
   ARTIFACTS_BUCKET: aws-sam-cli-managed-servicestage-p-artifactsbucket-khungzsxhcro
