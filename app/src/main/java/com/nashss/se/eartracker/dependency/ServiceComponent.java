@@ -1,6 +1,7 @@
 package com.nashss.se.eartracker.dependency;
 
 import com.nashss.se.eartracker.activity.AddListeningSessionActivity;
+import com.nashss.se.eartracker.activity.EditListeningSessionActivity;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -13,5 +14,13 @@ public interface ServiceComponent {
      * @return AddListeningSessionActivity
      */
     AddListeningSessionActivity provideAddListeningSessionActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return EditListeningSessionActivity
+     */
+    EditListeningSessionActivity provideEditListeningSessionActivity();
+
+
 
 }

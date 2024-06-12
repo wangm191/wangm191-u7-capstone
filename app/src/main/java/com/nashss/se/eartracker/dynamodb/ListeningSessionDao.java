@@ -2,6 +2,7 @@ package com.nashss.se.eartracker.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
 import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
@@ -63,8 +64,23 @@ public class ListeningSessionDao {
         return dynamoDbMapper.query(ListeningSession.class, queryExpression);
     }
 
+    /** Retrives the given listeningSession.
+     *
+     * @param email The partition key of the ListeningSession object.
+     * @param startSession The GSI range key of the ListeningSession object.
+     * @return The ListeningSession object that was retrieved
+     */
+    public ListeningSession getListeningSession(String email, LocalDateTime startSession) {
+        ListeningSession listeningSession = this.dynamoDbMapper.load(ListeningSession.class, email, startSession);
+
+        if (listeningSession == null) {
+            throw new ListeningSessionNotFoundException("No such listening session was found, please try again");
+        }
+        return listeningSession;
+    }
+
     /**
-     * Saves (creates or updates) the given playlist.
+     * Saves (creates or updates) the given listeningSession.
      *
      * @param listeningSession The ListeningSession object to save
      * @return The ListeningSession object that was saved
