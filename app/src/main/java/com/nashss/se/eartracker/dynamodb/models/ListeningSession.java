@@ -15,7 +15,6 @@ public class ListeningSession {
     private String timeElapsed;
     private String notes;
 
-    public static final String EMAIL_START_SESSION_INDEX = "EmailAndStartSessionIndex";
     public static final String EMAIL_LISTENING_TYPE_INDEX = "EmailAndListeningTypeIndex";
 
 
@@ -24,7 +23,7 @@ public class ListeningSession {
 
     public void setEmail(String email) { this.email = email;}
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = EMAIL_START_SESSION_INDEX, attributeName = "startSession")
+    @DynamoDBRangeKey(attributeName = "startSession")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getStartSession() { return startSession; }
 

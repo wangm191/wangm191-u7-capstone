@@ -482,15 +482,11 @@ Resources:
       KeySchema:
         - AttributeName: "email"
           KeyType: "HASH"
+        - AttributeName: "startSession"
+          KeyType: "RANGE"
       TableName: "listeningSessions"
       BillingMode: "PAY_PER_REQUEST"
       GlobalSecondaryIndexes:
-        - IndexName: "EmailAndStartSessionIndex"
-          KeySchema:
-            - AttributeName: "startSession"
-              KeyType: "HASH"
-          Projection:
-            ProjectionType: "ALL"
         - IndexName: "EmailAndListeningTypeIndex"
           KeySchema:
             - AttributeName: "listeningType"
