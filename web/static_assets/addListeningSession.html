@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/addListeningSession.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="background">
+<header class="header" id="header"></header>
+<div class="card">
+    <h2>Add Listening Session</h2>
+    <form class="card-content" id="add-listeningSession-form">
+        <p class="hidden error" id="error-message"> </p>
+        <p class="hidden success" id="success-message"> </p>
+        <p class="form-field">
+            <label>Start Session Time</label>
+            <input type="datetime-local" required class="validated-field" id="startSession" placeholder="2024-06-10T12:59:59"
+                   autofocus>
+        </p>
+        <p class="form-field">
+            <label>End Session Time</label>
+            <input type="datetime-local" required class="validated-field" id="endSession" placeholder="2024-06-10T16:00:00"
+                   autofocus>
+        </p>
+        <p class="form-field">
+            <label>Listening Type Name</label>
+            <input type="text" required class="validated-field" id="listeningType" placeholder="Zoom"
+                   autofocus>
+        </p>
+        <p class="form-field">
+            <label>Notes for Session</label>
+            <input type="text" id="notes" class="notes" placeholder="Meeting with boss">
+        </p>
+        <p>
+            <a href="#" class="button" id="add">Add Listening Session</a>
+        </p>
+    </form>
+</div>
+</body>
+
+</html>

@@ -44,6 +44,9 @@ class AddListeningSession extends BindingClass {
             errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('listeningSession', listeningSession);
+        const successMessageDisplay = document.getElementById('success-message');
+        successMessageDisplay.innerText = 'Successfully added listening session';
+        successMessageDisplay.classList.remove('hidden')
     }
 
     /**
