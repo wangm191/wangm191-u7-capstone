@@ -200,13 +200,6 @@ Resources:
                 - logs:PutLogEvents
                 - cloudwatch:PutMetricData
               Resource: '*'
-        - PolicyName: 'AccessPlaylistsTable'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-            - Effect: Allow
-              Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/playlists"
                 
         - PolicyName: 'AccessListeningSessionsTable'
           PolicyDocument:
@@ -216,21 +209,13 @@ Resources:
               Action: dynamodb:*
               Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions"
         
-        - PolicyName: 'AccessTypeTable'
+        - PolicyName: 'AccessListeningTypeTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
             - Effect: Allow
               Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/types"
-
-        - PolicyName: 'AccessTargetTable'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-            - Effect: Allow
-              Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/targets"
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningTypes"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
@@ -494,7 +479,24 @@ Resources:
           Projection:
             ProjectionType: "ALL"
 
-#
+  ListeningTypeTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "email"
+          AttributeType: "S"
+        - AttributeName: "listeningType"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "email"
+          KeyType: "HASH"
+        - AttributeName: "listeningType"
+          KeyType: "RANGE"
+      TableName: "listeningTypes"
+      BillingMode: "PAY_PER_REQUEST"
+
+
+
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy
