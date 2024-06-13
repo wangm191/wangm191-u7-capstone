@@ -60,6 +60,12 @@
     padding: 8px;
 }
 
+.success {
+    color: greenyellow;
+    border: 1px solid greenyellow;
+    padding: 8px;
+}
+
 .validated-field:invalid {
     outline: 2px solid var(--error-color);
 }

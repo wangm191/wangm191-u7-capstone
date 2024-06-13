@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.nashss.se.eartracker.dynamodb.models.ListeningSession.EMAIL_LISTENING_TYPE_INDEX;
+
 /**
  * Accesses data for the listeningSession using {@link ListeningSession} to represent the model in DynamoDB
  */
@@ -122,12 +124,13 @@ public class ListeningSessionDao {
         }
 
         Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":email", new AttributeValue(email));
         valueMap.put(":listeningType", new AttributeValue(listeningType));
 
 
         DynamoDBQueryExpression<ListeningSession> queryExpression = new DynamoDBQueryExpression<ListeningSession>()
-                .withKeyConditionExpression("email = :email AND listeningType = :listeningType")
+                .withIndexName(EMAIL_LISTENING_TYPE_INDEX)
+                .withConsistentRead(false)
+                .withKeyConditionExpression("listeningType = :listeningType")
                 .withExpressionAttributeValues(valueMap);
 
         return dynamoDbMapper.query(ListeningSession.class, queryExpression);
