@@ -27,7 +27,8 @@ module.exports = {
     viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
     searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
     addListeningSession: path.resolve(__dirname, 'src', 'pages', 'addListeningSession.js'),
-    deleteListeningSession: path.resolve(__dirname, 'src', 'pages', 'deleteListeningSession.js')
+    deleteListeningSession: path.resolve(__dirname, 'src', 'pages', 'deleteListeningSession.js'),
+    editListeningSession: path.resolve(__dirname, 'src', 'pages', 'editListeningSession.js')
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
