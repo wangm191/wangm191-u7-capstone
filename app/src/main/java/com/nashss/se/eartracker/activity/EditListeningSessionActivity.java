@@ -13,6 +13,8 @@ import com.nashss.se.eartracker.utils.ListeningSessionAndTypeServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static org.mockito.ArgumentMatchers.endsWith;
+
 import javax.inject.Inject;
 
 public class EditListeningSessionActivity {
@@ -41,24 +43,33 @@ public class EditListeningSessionActivity {
             throw new SecurityException("You must own the listeningSession to update it");
         }
 
-        if (editListeningSessionRequest.getNewStartSession() == editListeningSessionRequest.getStartSession() ||
-                editListeningSessionRequest.getNewStartSession() == null) {
-            listeningSession.setStartSession(editListeningSessionRequest.getStartSession());
+        if (!editListeningSessionRequest.getNewStartSession().equals(editListeningSessionRequest.getStartSession()) && editListeningSessionRequest.getNewStartSession() == null){
+            ListeningSession newListeningSession = new ListeningSession();
+            newListeningSession.setEmail(editListeningSessionRequest.getEmail());
+            newListeningSession.setStartSession(editListeningSessionRequest.getNewStartSession());
+            newListeningSession.setEndSession(editListeningSessionRequest.getEndSession());
+            newListeningSession.setListeningType(editListeningSessionRequest.getListeningType());
+            newListeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(editListeningSessionRequest.getNewStartSession(), editListeningSessionRequest.getEndSession()));
+            newListeningSession.setNotes(editListeningSessionRequest.getNotes());;
+            listeningSessionDao.deleteListeningSession(listeningSession);
+            listeningSessionDao.saveListeningSession(newListeningSession);
+
+            return EditListeningSessionResult.builder()
+            .withListeningSession(new ModelConverter().toListeningSessionModel(newListeningSession))
+            .build();
         }
         else {
-            listeningSession.setStartSession(editListeningSessionRequest.getNewStartSession());
+            listeningSession.setEndSession(editListeningSessionRequest.getEndSession());
+            listeningSession.setListeningType(editListeningSessionRequest.getListeningType());
+            listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(listeningSession.getStartSession(), listeningSession.getEndSession()));
+            listeningSession.setNotes(editListeningSessionRequest.getNotes());
+    
+            listeningSessionDao.saveListeningSession(listeningSession);
+
+            return EditListeningSessionResult.builder()
+            .withListeningSession(new ModelConverter().toListeningSessionModel(listeningSession))
+            .build();
         }
-
-        listeningSession.setEndSession(editListeningSessionRequest.getEndSession());
-        listeningSession.setListeningType(editListeningSessionRequest.getListeningType());
-        listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(listeningSession.getStartSession(), listeningSession.getEndSession()));
-        listeningSession.setNotes(editListeningSessionRequest.getNotes());
-
-        listeningSessionDao.saveListeningSession(listeningSession);
-
-        return EditListeningSessionResult.builder()
-                .withListeningSession(new ModelConverter().toListeningSessionModel(listeningSession))
-                .build();
     }
 
 }

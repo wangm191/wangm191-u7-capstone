@@ -123,13 +123,14 @@ public class ListeningSessionDao {
         }
 
         Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put("email", new AttributeValue(email));
         valueMap.put(":listeningType", new AttributeValue(listeningType));
 
 
         DynamoDBQueryExpression<ListeningSession> queryExpression = new DynamoDBQueryExpression<ListeningSession>()
                 .withIndexName(EMAIL_LISTENING_TYPE_INDEX)
                 .withConsistentRead(false)
-                .withKeyConditionExpression("listeningType = :listeningType")
+                .withKeyConditionExpression("email = :email AND listeningType = :listeningType")
                 .withExpressionAttributeValues(valueMap);
 
         return dynamoDbMapper.query(ListeningSession.class, queryExpression);
