@@ -244,7 +244,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
+      CodeUri: app
       Handler: com.nashss.se.eartracker.lambda.DeleteListeningSessionLambda::handleRequest
       Runtime: java11
       Architectures:
@@ -254,7 +254,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        EarTrackerService:
           Type: Api
           Properties:
             Path: /listeningSessions/{startSession}
