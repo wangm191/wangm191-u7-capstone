@@ -4,8 +4,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
-import com.nashss.se.eartracker.exceptions.InvalidAttributeException;
-import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
 import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +14,7 @@ import org.mockito.Mock;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -61,6 +58,33 @@ public class ListeningSessionDaoTest {
     public void searchListeningSessionByDate_attributesAreNull_throwsListeningSessionNotFoundException(){
         // WHEN + THEN
         assertThrows(ListeningSessionNotFoundException.class, () -> listeningSessionDao.searchListeningSessionByDate(null, null));
+    }
+
+    @Test
+    public void getListeningSession_withValidEmailAndStartSession_callsMapperWithPartitionKey() {
+        // GIVEN
+        String email = "validEmail@email.com";
+        LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
+        when(dynamoDbMapper.load(ListeningSession.class, email, startSession)).thenReturn(new ListeningSession());
+
+        // WHEN
+        ListeningSession listeningSession = listeningSessionDao.getListeningSession(email, startSession);
+
+        // THEN
+        assertNotNull(listeningSession);
+        verify(dynamoDbMapper).load(ListeningSession.class, email, startSession);
+    }
+
+    @Test
+    public void getListeningSession_emailNotFound_throwsListeningSessionNotFoundException() {
+        // GIVEN
+        String fakeEmail = "NotReal";
+        LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
+
+        when(dynamoDbMapper.load(ListeningSession.class, fakeEmail, startSession)).thenReturn(null);
+
+        // WHEN + THEN
+        assertThrows(ListeningSessionNotFoundException.class, () -> listeningSessionDao.getListeningSession(fakeEmail, startSession));
     }
 
     @Test
