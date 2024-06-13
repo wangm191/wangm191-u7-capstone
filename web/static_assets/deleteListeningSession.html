@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="assets/addListeningSession.js"></script>
+    <script type="text/javascript" src="assets/deleteListeningSession.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body class="background">
 <header class="header" id="header"></header>
 <div class="card">
-    <h2>Add Listening Session</h2>
-    <form class="card-content" id="add-listeningSession-form">
+    <h2>Delete Listening Session</h2>
+    <form class="card-content" id="delete-listeningSession-form">
         <p class="hidden error" id="error-message"> </p>
         <p class="hidden success" id="success-message"> </p>
         <p class="form-field">
@@ -19,21 +19,12 @@
                    autofocus>
         </p>
         <p class="form-field">
-            <label>End Session Time</label>
-            <input type="datetime-local" step="1" required class="validated-field" id="endSession" placeholder="2024-06-10T16:00:00"
-                   autofocus>
-        </p>
-        <p class="form-field">
             <label>Listening Type Name</label>
             <input type="text" required class="validated-field" id="listeningType" placeholder="Zoom"
                    autofocus>
         </p>
-        <p class="form-field">
-            <label>Notes for Session</label>
-            <input type="text" id="notes" class="notes" placeholder="Meeting with boss">
-        </p>
         <p>
-            <a href="#" class="button" id="add">Add Listening Session</a>
+            <a href="#" class="button" id="add">Delete Listening Session</a>
         </p>
     </form>
 </div>

@@ -257,7 +257,7 @@ Resources:
         EarTrackerService:
           Type: Api
           Properties:
-            Path: /listeningSessions/{startSession}
+            Path: /listeningSessions/delete
             Method: DELETE
 
   GetListeningSessionsLambda:

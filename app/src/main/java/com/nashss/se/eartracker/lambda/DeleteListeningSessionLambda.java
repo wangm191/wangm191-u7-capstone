@@ -15,7 +15,7 @@ public class DeleteListeningSessionLambda
                     DeleteListeningSessionRequest unauthenticatedRequest = input.fromBody(DeleteListeningSessionRequest.class);
                     return input.fromUserClaims(claims ->
                             DeleteListeningSessionRequest.builder()
-                                    .withEmail(unauthenticatedRequest.getEmail())
+                                    .withEmail(claims.get("email"))
                                     .withStartSession(unauthenticatedRequest.getStartSession())
                                     .withListeningType(unauthenticatedRequest.getListeningType())
                                     .build());

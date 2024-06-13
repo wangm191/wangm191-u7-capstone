@@ -15,7 +15,7 @@ export default class EarTrackerClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addListeningSession'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addListeningSession', 'deleteListeningSession'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -123,6 +123,30 @@ export default class EarTrackerClient extends BindingClass {
                 }
             });
             return response.data.listeningSession;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Deletes the listeningSession owned by the current user.
+     * @param startSession The LocalDateTime of the start of the session.
+     * @param listeningType The type of listening associated with the session.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The listeningSession that has been deleted.
+     */
+    async deleteListeningSession(startSession, listeningType, errorCallback) {
+        try{
+            const token = await this.getTokenOrThrow("Only authenticated users can create listening sessions.");
+            const response = await this.axiosClient.delete('listeningSessions', {
+                startSession: startSession,
+                listeningType: listeningType
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data.listeningSession;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
