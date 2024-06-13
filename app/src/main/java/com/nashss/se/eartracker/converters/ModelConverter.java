@@ -31,7 +31,7 @@ public class ModelConverter {
      * @param listeningType the listeningType to convert
      * @return the converted listeningSession
      */
-    public ListeningTypeModel toListeningSessionModel(ListeningType listeningType) {
+    public ListeningTypeModel toListeningTypeModel(ListeningType listeningType) {
         return ListeningTypeModel.builder()
                 .withEmail(listeningType.getEmail())
                 .withListeningType(listeningType.getListeningType())
