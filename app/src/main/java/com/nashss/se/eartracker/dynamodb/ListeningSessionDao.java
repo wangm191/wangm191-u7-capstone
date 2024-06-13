@@ -65,6 +65,21 @@ public class ListeningSessionDao {
         return dynamoDbMapper.query(ListeningSession.class, queryExpression);
     }
 
+    /** Retrieves the given listeningSession.
+     *
+     * @param email The partition key of the ListeningSession object.
+     * @param startSession The GSI range key of the ListeningSession object.
+     * @return The ListeningSession object that was retrieved
+     */
+    public ListeningSession getListeningSession(String email, LocalDateTime startSession) {
+        ListeningSession listeningSession = this.dynamoDbMapper.load(ListeningSession.class, email, startSession);
+
+        if (listeningSession == null) {
+            throw new ListeningSessionNotFoundException("No such listening session was found, please try again");
+        }
+        return listeningSession;
+    }
+
     /**
      * Saves (creates or updates) the given playlist.
      *
