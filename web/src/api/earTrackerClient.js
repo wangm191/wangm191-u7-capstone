@@ -162,10 +162,10 @@ export default class EarTrackerClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The listeningSession that has been deleted.
      */
-    async deleteListeningSession(startSession, newStartSession, endSession, listeningType, notes, errorCallback) {
+    async editListeningSession(startSession, newStartSession, endSession, listeningType, notes, errorCallback) {
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can edit listening sessions.");
-            const response = await this.axiosClient.delete('listeningSessions', {
+            const response = await this.axiosClient.put('listeningSessions', {
                 startSession: startSession,
                 newStartSession: newStartSession, 
                 endSession: endSession, 

@@ -10,6 +10,16 @@ class EditListeningSession extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToViewListeningSession)
         this.header = new Header(this.dataStore);
+
+        document.getElementById('edit').disabled = true;
+
+        document.getElementById('startSession').addEventListener("change", (event) => {
+            if (event.target.value) {
+                document.getElementById("edit").disabled = false;
+            }
+            else { document.getElementById("edit").disabled = true;
+        }
+          });
     }
 
     /**
@@ -24,11 +34,11 @@ class EditListeningSession extends BindingClass {
     }
 
     /**
-     * Method to run when the add listening session submit button is pressed. Call the EarTrackerService to create the listeningSession.
+     * Method to run when the edit listening session submit button is pressed. Call the EarTrackerService to create the listeningSession.
      */
     async submit(evt) {
         evt.preventDefault();
-
+        console.log("anyString")
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
@@ -39,14 +49,16 @@ class EditListeningSession extends BindingClass {
         const listeningType = document.getElementById('listeningType').value;
         const notes = document.getElementById('notes').value;
 
-        const listeningSession = await this.client.addListeningSession(startSession, newStartSession, endSession, listeningType, notes, (error) => {
-            createButton.innerText = origButtonText;
+        const listeningSession = await this.client.editListeningSession(startSession, newStartSession, endSession, listeningType, notes, (error) => {
+            // createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
+            successMessageDisplay.classList.add('hidden');
         });
+        
         this.dataStore.set('listeningSession', listeningSession);
         const successMessageDisplay = document.getElementById('success-message');
-        successMessageDisplay.innerText = 'Successfully updated listening session';
+        successMessageDisplay.innerText = 'Successfully edited listening session';
         successMessageDisplay.classList.remove('hidden')
     }
 
@@ -65,8 +77,8 @@ class EditListeningSession extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const addListeningSession = new AddListeningSession();
-    addListeningSession.mount();
+    const editListeningSession = new EditListeningSession();
+    editListeningSession.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
