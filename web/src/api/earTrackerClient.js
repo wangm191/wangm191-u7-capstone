@@ -165,7 +165,7 @@ export default class EarTrackerClient extends BindingClass {
     async editListeningSession(startSession, newStartSession, endSession, listeningType, notes, errorCallback) {
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can edit listening sessions.");
-            const response = await this.axiosClient.put('listeningSessions', {
+            const response = await this.axiosClient.put('listeningSessions/edit', {
                 startSession: startSession,
                 newStartSession: newStartSession, 
                 endSession: endSession, 

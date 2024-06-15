@@ -47,7 +47,19 @@ public class EditListeningSessionActivity {
             throw new SecurityException("You must own the listeningSession to update it");
         }
 
-        if (!editListeningSessionRequest.getNewStartSession().equals(editListeningSessionRequest.getStartSession()) && editListeningSessionRequest.getNewStartSession() == null){
+        if (editListeningSessionRequest.getStartSession().equals(editListeningSessionRequest.getNewStartSession()) || editListeningSessionRequest.getNewStartSession() == null){
+            listeningSession.setEndSession(editListeningSessionRequest.getEndSession());
+            listeningSession.setListeningType(editListeningSessionRequest.getListeningType());
+            listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(listeningSession.getStartSession(), listeningSession.getEndSession()));
+            listeningSession.setNotes(editListeningSessionRequest.getNotes());
+    
+            listeningSessionDao.saveListeningSession(listeningSession);
+
+            return EditListeningSessionResult.builder()
+            .withListeningSession(new ModelConverter().toListeningSessionModel(listeningSession))
+            .build();
+        }
+        else {
             ListeningSession newListeningSession = new ListeningSession();
             newListeningSession.setEmail(editListeningSessionRequest.getEmail());
             newListeningSession.setStartSession(editListeningSessionRequest.getNewStartSession());
@@ -60,18 +72,6 @@ public class EditListeningSessionActivity {
 
             return EditListeningSessionResult.builder()
             .withListeningSession(new ModelConverter().toListeningSessionModel(newListeningSession))
-            .build();
-        }
-        else {
-            listeningSession.setEndSession(editListeningSessionRequest.getEndSession());
-            listeningSession.setListeningType(editListeningSessionRequest.getListeningType());
-            listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(listeningSession.getStartSession(), listeningSession.getEndSession()));
-            listeningSession.setNotes(editListeningSessionRequest.getNotes());
-    
-            listeningSessionDao.saveListeningSession(listeningSession);
-
-            return EditListeningSessionResult.builder()
-            .withListeningSession(new ModelConverter().toListeningSessionModel(listeningSession))
             .build();
         }
     }
