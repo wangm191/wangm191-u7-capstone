@@ -9,6 +9,7 @@ import com.nashss.se.eartracker.converters.ModelConverter;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
 import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
+import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
 import com.nashss.se.eartracker.utils.ListeningSessionAndTypeServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,11 +40,26 @@ public class EditListeningSessionActivity {
         TimeElapsedCalculator timeElapsedCalculator = new TimeElapsedCalculator();
         ListeningSession listeningSession = listeningSessionDao.getListeningSession(editListeningSessionRequest.getEmail(), editListeningSessionRequest.getStartSession());
 
+        if (listeningSession.getStartSession() == null) {
+            throw new ListeningSessionNotFoundException("Listening session cannot be found, please try again");
+        }
         if (!listeningSession.getEmail().equals(editListeningSessionRequest.getEmail())){
             throw new SecurityException("You must own the listeningSession to update it");
         }
 
-        if (!editListeningSessionRequest.getNewStartSession().equals(editListeningSessionRequest.getStartSession()) && editListeningSessionRequest.getNewStartSession() == null){
+        if (editListeningSessionRequest.getStartSession().equals(editListeningSessionRequest.getNewStartSession()) || editListeningSessionRequest.getNewStartSession() == null){
+            listeningSession.setEndSession(editListeningSessionRequest.getEndSession());
+            listeningSession.setListeningType(editListeningSessionRequest.getListeningType());
+            listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(listeningSession.getStartSession(), listeningSession.getEndSession()));
+            listeningSession.setNotes(editListeningSessionRequest.getNotes());
+    
+            listeningSessionDao.saveListeningSession(listeningSession);
+
+            return EditListeningSessionResult.builder()
+            .withListeningSession(new ModelConverter().toListeningSessionModel(listeningSession))
+            .build();
+        }
+        else {
             ListeningSession newListeningSession = new ListeningSession();
             newListeningSession.setEmail(editListeningSessionRequest.getEmail());
             newListeningSession.setStartSession(editListeningSessionRequest.getNewStartSession());
@@ -56,18 +72,6 @@ public class EditListeningSessionActivity {
 
             return EditListeningSessionResult.builder()
             .withListeningSession(new ModelConverter().toListeningSessionModel(newListeningSession))
-            .build();
-        }
-        else {
-            listeningSession.setEndSession(editListeningSessionRequest.getEndSession());
-            listeningSession.setListeningType(editListeningSessionRequest.getListeningType());
-            listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(listeningSession.getStartSession(), listeningSession.getEndSession()));
-            listeningSession.setNotes(editListeningSessionRequest.getNotes());
-    
-            listeningSessionDao.saveListeningSession(listeningSession);
-
-            return EditListeningSessionResult.builder()
-            .withListeningSession(new ModelConverter().toListeningSessionModel(listeningSession))
             .build();
         }
     }

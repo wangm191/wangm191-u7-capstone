@@ -16,6 +16,8 @@ class DeleteListeningSession extends BindingClass {
      */
      mount() {
         document.getElementById('delete').addEventListener('click', this.submit);
+        
+        document.getElementById('back').addEventListener('click', this.redirectToMainMenu);
     
         this.header.addHeaderToPage();
 
@@ -54,6 +56,10 @@ class DeleteListeningSession extends BindingClass {
         if (listeningSession != null) {
             window.location.href = `/viewListeningSession.html?id=${listeningSession}`;
         }
+    }
+
+    redirectToMainMenu() {
+        window.location.href = `/index.html`;
     }
 }
 
