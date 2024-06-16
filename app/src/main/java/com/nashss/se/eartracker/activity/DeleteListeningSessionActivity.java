@@ -25,10 +25,16 @@ public class DeleteListeningSessionActivity {
         logger.error("Received DeleteListeningSessionRequest {}", deleteListeningSessionRequest);
 
         if (!deleteListeningSessionRequest.validRequestDelete()){
-            throw new ListeningSessionNotFoundException("The Request is invalid");
         }
 
-        ListeningSession listeningSession = new ListeningSession();
+        ListeningSession listeningSession = listeningSessionDao.getListeningSession(deleteListeningSessionRequest.getEmail(), deleteListeningSessionRequest.getStartSession());
+        
+        if (!listeningSession.getEmail().equals(deleteListeningSessionRequest.getEmail()) || 
+        !listeningSession.getStartSession().equals(deleteListeningSessionRequest.getStartSession()) ||
+        !listeningSession.getListeningType().equals(listeningSession.getListeningType())) {
+            throw new ListeningSessionNotFoundException("Listening session not found, request is invalid");
+        }
+        
         listeningSession.setEmail(deleteListeningSessionRequest.getEmail());
         listeningSession.setStartSession(deleteListeningSessionRequest.getStartSession());
         listeningSession.setListeningType(deleteListeningSessionRequest.getListeningType());
