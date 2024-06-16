@@ -138,10 +138,10 @@ export default class EarTrackerClient extends BindingClass {
     async deleteListeningSession(startSession, listeningType, errorCallback) {
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can delete listening sessions.");
-            const response = await this.axiosClient.delete('listeningSessions', {
+            const response = await this.axiosClient.delete('listeningSessions/delete', {data:{
                 startSession: startSession,
-                listeningType: listeningType
-        }, {
+                listeningType: listeningType,
+            },
             headers: {
                 Authorization: `Bearer ${token}`
             }

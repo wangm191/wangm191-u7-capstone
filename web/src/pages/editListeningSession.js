@@ -17,8 +17,9 @@ class EditListeningSession extends BindingClass {
             if (event.target.value) {
                 document.getElementById("edit").disabled = false;
             }
-            else { document.getElementById("edit").disabled = true;
-        }
+            else { 
+                document.getElementById("edit").disabled = true;
+            }
           });
     }
 
@@ -61,7 +62,7 @@ class EditListeningSession extends BindingClass {
         this.dataStore.set('listeningSession', listeningSession);
         const successMessageDisplay = document.getElementById('success-message');
         successMessageDisplay.innerText = 'Successfully edited listening session';
-        successMessageDisplay.classList.remove('hidden')
+        successMessageDisplay.classList.remove('hidden');
     }
 
     /**
