@@ -19,6 +19,7 @@ public class ListeningSession {
 
 
     @DynamoDBHashKey(attributeName = "email")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = EMAIL_LISTENING_TYPE_INDEX, attributeName = "email")
     public String getEmail() { return email; }
 
     public void setEmail(String email) { this.email = email;}
@@ -35,7 +36,7 @@ public class ListeningSession {
 
     public void setEndSession(LocalDateTime endSession) { this.endSession = endSession; }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = EMAIL_LISTENING_TYPE_INDEX, attributeName = "listeningType")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = EMAIL_LISTENING_TYPE_INDEX, attributeName = "listeningType")
     public String getListeningType() { return listeningType; }
 
     public void setListeningType(String listeningType) { this.listeningType = listeningType; }

@@ -42,24 +42,26 @@ public class ListeningSessionDao {
      *       "startSession" is a hash key of the GSI
 
      * @param email the String email of user
-     * @param startSession the LocalDateTime of the specific listening session
+     * @param startSessionBegin the 12:00:00 am of Day for LocalDateTime of the specific listening session
+     * @param startSessionEnd the 11:59:59 pm of Day for LocalDateTime of the specific listening session
      * @return a list of {@link ListeningSession} matching the specified email and startSession date time.
      */
-    public List<ListeningSession> searchListeningSessionByDate(String email, LocalDateTime startSession) {
+    public List<ListeningSession> searchListeningSessionByDate(String email, LocalDateTime startSessionBegin, LocalDateTime startSessionEnd) {
         if (email == null){
             throw new ListeningSessionNotFoundException("error: Missing email, cannot find Listening Session. ");
         }
-        if (startSession == null){
+        if (startSessionBegin == null){
             throw new ListeningSessionNotFoundException("error: Missing startSession date and time, cannot find Listening Session. ");
         }
 
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":email", new AttributeValue(email));
-        valueMap.put(":startSession", new AttributeValue(String.valueOf(startSession)));
+        valueMap.put(":startSessionBegin", new AttributeValue(String.valueOf(startSessionBegin)));
+        valueMap.put(":startSessionEnd", new AttributeValue(String.valueOf(startSessionEnd)));
 
 
         DynamoDBQueryExpression<ListeningSession> queryExpression = new DynamoDBQueryExpression<ListeningSession>()
-                .withKeyConditionExpression("email = :email AND startSession = :startSession")
+                .withKeyConditionExpression("email = :email AND startSession BETWEEN :startSessionBegin AND :startSessionEnd")
                 .withExpressionAttributeValues(valueMap);
 
         return dynamoDbMapper.query(ListeningSession.class, queryExpression);
