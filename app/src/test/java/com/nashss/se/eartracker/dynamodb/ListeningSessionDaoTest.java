@@ -43,11 +43,14 @@ public class ListeningSessionDaoTest {
         String validEmail = "validEmail@email.com";
         LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
 
+        LocalDateTime startSessionBegin = startSession.withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime startSessionEnd = startSession.withHour(23).withMinute(59).withSecond(59);
+
         when(dynamoDbMapper.query(eq(ListeningSession.class), any(DynamoDBQueryExpression.class))).thenReturn(listeningSessions);
         ArgumentCaptor<DynamoDBQueryExpression<ListeningSession>> captor = ArgumentCaptor.forClass(DynamoDBQueryExpression.class);
 
         // WHEN
-        List<ListeningSession> result = listeningSessionDao.searchListeningSessionByDate(validEmail, startSession);
+        List<ListeningSession> result = listeningSessionDao.searchListeningSessionByDate(validEmail, startSessionBegin, startSessionEnd);
 
         // THEN
         assertEquals(listeningSessions, result, "Expected list of listeningSessions to be equal to what dynamoDb returned");
@@ -57,7 +60,7 @@ public class ListeningSessionDaoTest {
     @Test
     public void searchListeningSessionByDate_attributesAreNull_throwsListeningSessionNotFoundException(){
         // WHEN + THEN
-        assertThrows(ListeningSessionNotFoundException.class, () -> listeningSessionDao.searchListeningSessionByDate(null, null));
+        assertThrows(ListeningSessionNotFoundException.class, () -> listeningSessionDao.searchListeningSessionByDate(null, null, null));
     }
 
     @Test

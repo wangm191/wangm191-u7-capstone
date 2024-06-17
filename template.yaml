@@ -281,12 +281,12 @@ Resources:
             Method: put
 
 
-  GetListeningSessionsLambda:
+  GetListeningSessionsByDateLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: app
-      Handler: com.nashss.se.eartracker.lambda.GetPlaylistLambda::handleRequest
+      Handler: com.nashss.se.eartracker.lambda.GetListeningSessionsByDateLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -298,7 +298,7 @@ Resources:
         EarTrackerService:
           Type: Api
           Properties:
-            Path: /listeningSessions/{startSession}
+            Path: /listeningSessions/viewListeningSessions
             Method: get
             Auth:
               Authorizer: 'NONE'
@@ -515,8 +515,10 @@ Resources:
       GlobalSecondaryIndexes:
         - IndexName: "EmailAndListeningTypeIndex"
           KeySchema:
-            - AttributeName: "listeningType"
+            - AttributeName: "email"
               KeyType: "HASH"
+            - AttributeName: "listeningType"
+              KeyType: "RANGE"
           Projection:
             ProjectionType: "ALL"
 

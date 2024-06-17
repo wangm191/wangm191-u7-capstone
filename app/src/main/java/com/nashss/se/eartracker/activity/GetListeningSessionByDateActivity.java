@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class GetListeningSessionByDateActivity {
@@ -24,8 +25,10 @@ public class GetListeningSessionByDateActivity {
     public GetListeningSessionByDateResult handleRequest(final GetListeningSessionByDateRequest getListeningSessionByDateRequest) {
         log.info("Received GetListeningSessionByDateRequest {}", getListeningSessionByDateRequest);
 
+        LocalDateTime startSessionBegin =  getListeningSessionByDateRequest.getStartSession().withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime startSessionEnd = getListeningSessionByDateRequest.getStartSession().withHour(23).withMinute(59).withSecond(59);
         List<ListeningSession> listeningSessions = listeningSessionDao.searchListeningSessionByDate
-                (getListeningSessionByDateRequest.getEmail(), getListeningSessionByDateRequest.getStartSession());
+                (getListeningSessionByDateRequest.getEmail(), startSessionBegin, startSessionEnd);
 
         List<ListeningSessionModel> listeningSessionModels = new ModelConverter().toListeningSessionModelList(listeningSessions);
         return GetListeningSessionByDateResult.builder()
