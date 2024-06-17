@@ -10,6 +10,17 @@ class AddListeningSession extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.redirectToViewListeningSession)
         this.header = new Header(this.dataStore);
+
+        document.getElementById('add').disabled = true;
+
+        document.getElementById('startSession').addEventListener("change", (event) => {
+            if (event.target.value) {
+                document.getElementById("add").disabled = false;
+            }
+            else { 
+                document.getElementById("add").disabled = true;
+            }
+          });
     }
 
     /**
@@ -41,9 +52,10 @@ class AddListeningSession extends BindingClass {
         const notes = document.getElementById('notes').value;
 
         const listeningSession = await this.client.addListeningSession(startSession, endSession, listeningType, notes, (error) => {
-            createButton.innerText = origButtonText;
+            //createButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
+            successMessageDisplay.classList.add('hidden');
         });
         this.dataStore.set('listeningSession', listeningSession);
         const successMessageDisplay = document.getElementById('success-message');
