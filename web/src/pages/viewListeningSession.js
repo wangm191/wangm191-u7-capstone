@@ -6,8 +6,9 @@ import DataStore from '../util/DataStore';
 class ViewListeningSession extends BindingClass {
     constructor(params) {
         super();
-        this.bindClassMethods(['mount', 'redirectToMainMenu'], this)
+        this.bindClassMethods(['clientLoaded', 'mount','addListeningSessionByDateToPage'], this)
         this.dataStore = new DataStore();
+        this.dataStore.addChangeListener(this.addListeningSessionByDateToPage);
         this.header = new Header(this.dataStore);
         console.log("viewListeningSession constructor");
     }
@@ -16,8 +17,7 @@ class ViewListeningSession extends BindingClass {
      * Once the client is loaded, get the listeningSession metadata.
      */
     async clientLoaded() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const listeningSession = urlParams.get('email');
+        const startSession = document.getElementById('startSession').value;
         document.getElementById('listeningSessionsByDate').innerText = "Loading Listening Sessions By Date ...";
         document.getElementById('listeningSessionsByType').innerText = "Loading Listening Session By Type ..."; 
         const listeningSessionsByDate = await this.client.getListeningSessionByDate(startSession);
@@ -31,9 +31,9 @@ class ViewListeningSession extends BindingClass {
      */
     mount() {
 
-        document.getElementById('search-listeningSession-by-date').addEventListener('click', this.redirectToGetListeningSessionByDate);
+        document.getElementById('get-listeningSession-by-date').addEventListener('click', this.addListeningSessionByDateToPage);
 
-        document.getElementById('back').addEventListener('click', this.redirectToMainMenu);
+        document.getElementById('back').addEventListener('click', this.redirectToMainMenu)
         
         this.header.addHeaderToPage();
 
@@ -86,10 +86,6 @@ class ViewListeningSession extends BindingClass {
         document.getElementById('listeningSessionsByDate').innerText = listeningSessionsHtml;
     }
 
-    redirectToGetListeningSessionByDate(){
-        window.location.href = `/getListeningSessionByDate.html`;
-    }
-
     redirectToMainMenu() {
         window.location.href = `/index.html`;
     }
@@ -103,3 +99,5 @@ const main = async () => {
     const viewListeningSession = new ViewListeningSession();
     viewListeningSession.mount();
 }
+
+window.addEventListener('DOMContentLoaded', main);
