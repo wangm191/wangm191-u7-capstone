@@ -5,8 +5,10 @@ import com.nashss.se.eartracker.activity.result.DeleteListeningSessionResult;
 import com.nashss.se.eartracker.converters.ModelConverter;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
+import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
 import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
 import com.nashss.se.eartracker.models.ListeningSessionModel;
+import com.nashss.se.eartracker.utils.ListeningSessionAndTypeServiceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,11 +29,17 @@ public class DeleteListeningSessionActivity {
         if (!deleteListeningSessionRequest.validRequestDelete()){
         }
 
+        if (!ListeningSessionAndTypeServiceUtils.isValidEmail(deleteListeningSessionRequest.getEmail())) {
+            throw new InvalidAttributeValueException("email is unacceptable, please try again"); }
+
+        if (!ListeningSessionAndTypeServiceUtils.isValidString(deleteListeningSessionRequest.getListeningType())) {
+            throw new InvalidAttributeValueException("listeningType is unacceptable, please try again"); }
+
         ListeningSession listeningSession = listeningSessionDao.getListeningSession(deleteListeningSessionRequest.getEmail(), deleteListeningSessionRequest.getStartSession());
         
         if (!listeningSession.getEmail().equals(deleteListeningSessionRequest.getEmail()) || 
         !listeningSession.getStartSession().equals(deleteListeningSessionRequest.getStartSession()) ||
-        !listeningSession.getListeningType().equals(listeningSession.getListeningType())) {
+        !listeningSession.getListeningType().equals(deleteListeningSessionRequest.getListeningType())) {
             throw new ListeningSessionNotFoundException("Listening session not found, request is invalid");
         }
         
