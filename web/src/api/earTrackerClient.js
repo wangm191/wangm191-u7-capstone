@@ -15,7 +15,7 @@ export default class EarTrackerClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addListeningSession', 'deleteListeningSession', 'editListeningSession'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addListeningSession', 'deleteListeningSession', 'editListeningSession', 'getListeningSessionByDate'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -84,7 +84,7 @@ export default class EarTrackerClient extends BindingClass {
         } catch (error) {
             this.handleError(error, errorCallback)
         }
-    }
+    } 
 
     /**
      * Get the songs on a given playlist by the playlist's identifier.
@@ -181,6 +181,42 @@ export default class EarTrackerClient extends BindingClass {
             this.handleError(error, errorCallback)
         }
     }
+
+    // /**
+    //  * Gets all the listeningSessions for the email.
+    //  * @param email Unique identifier for the listeningSessions 
+    //  * @param errorCallback (Optional) A function to execute if the call fails.
+    //  * @returns The listeningSessions's metadata.
+    //  */
+    // async getAllListeningSessions(email, errorCallback) {
+    //     try {
+    //         const response = await this.axiosClient.get(`listeningSessions/${email}`);
+    //         return response.data.listeningSession;
+    //     } catch (error) {
+    //         this.handleError(error, errorCallback)
+    //     }
+    // } 
+
+     /**
+     * Gets all the listeningSessions corresponding to the correct startSession date time.
+     * @param startSession Unique RANGE key identifier for the listeningSessions
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The queried listeningSessions's metadata.
+     */
+    async getListeningSessionByDate(startSession, errorCallback) {
+        try{
+            const token = await this.getTokenOrThrow("Only authenticated users can edit listening sessions.");
+            const response = await this.axiosClient.get(`listeningSessions/${startSession}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+            return response.data.listeningSessionsByDate;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    } 
+    
 
     /**
      * Create a new playlist owned by the current user.

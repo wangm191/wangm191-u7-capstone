@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/viewListeningSession.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css"> 
+</head>
+
+<body class="background">
+<header class="header" id="header"></header>
+<div class="card">
+    <h2 id="listeningSession-by-date-header">View Listening Sessions</h2>
+    <form class="card-content" id="view-listeningSession-form"></form>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="column">
+            <h2 id="listeningSession-date-page">View Listening Sessions By Date</h2>
+            <p class="hidden error" id="error-message"></p>
+            <p class="form-field">
+                <label>Start Session</label>
+                <input type="datetime-local" step="1" required class="validated-field" id="startSession" placeholder="2024-06-10T12:59:59"
+                autofocus>
+            </p>
+            <a href="#" class="button" id="submit-listeningSession-by-date">Submit Listening Session By Date</a>
+            <hr>
+            <div id="listeningSessionsByDate"></div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="column">
+            <h2 id="listeningSession-by-type">View Listening Sessions By Type </h2>
+            <p class="hidden error" id="error-message"></p>
+            <p class="form-field">
+                <label>Listening Type</label>
+                <input type="text" required class="validated-field" id="listeningType" placeholder="Zoom"
+                autofocus>
+            </p>
+            <a href="#" class="button" id="submit-listeningSession-by-date">Submit Listening Session By Date</a>
+            <hr>
+            <div id="listeningSessionsByType"></div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <p>
+        <a href="#" class="button" id="back">Back to main menu</a>
+    </p>
+</div>
+
+
+</body>
+</html>

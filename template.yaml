@@ -298,10 +298,9 @@ Resources:
         EarTrackerService:
           Type: Api
           Properties:
-            Path: /listeningSessions/viewListeningSessions
+            Path: /listeningSessions/{startSession}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
+              
 
 #  SearchPlaylistsLambda:
 #    Type: AWS::Serverless::Function
