@@ -11,18 +11,23 @@ import java.time.LocalDateTime;
 
 public class GetListeningSessionByDateLambda
         extends LambdaActivityRunner<GetListeningSessionByDateRequest, GetListeningSessionByDateResult>
-        implements RequestHandler<LambdaRequest<GetListeningSessionByDateRequest>, LambdaResponse> {
+        implements RequestHandler<AuthenticatedLambdaRequest<GetListeningSessionByDateRequest>, LambdaResponse> {
 
     private final Logger log = LogManager.getLogger();
 
     @Override
-    public LambdaResponse handleRequest(LambdaRequest<GetListeningSessionByDateRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetListeningSessionByDateRequest> input, Context context) {
         log.info("handleRequest");
+        GetListeningSessionByDateRequest emailRequest = input.fromUserClaims
+                (claims -> GetListeningSessionByDateRequest.builder()
+                                .withEmail(claims.get("email"))
+                                .build());
+        
         return super.runActivity(
                 () -> input.fromPathAndQuery((path, query) ->
                         GetListeningSessionByDateRequest.builder()
-                                .withEmail(path.get("email"))
-                                .withStartSession(LocalDateTime.parse(query.get("startSession")))
+                                .withEmail(emailRequest.getEmail())
+                                .withStartSession(LocalDateTime.parse(path.get("startSession")))
                                 .build()),
                 (request, serviceComponent) ->
                         serviceComponent.provideGetListeningSessionByDateActivity().handleRequest(request)

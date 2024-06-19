@@ -28,7 +28,6 @@ public class DeleteListeningSessionRequest {
         return listeningType;
     }
 
-    //CHECKSTYLE:OFF
     public boolean validRequestDelete() {
         if (startSession == null || listeningType == null) {
             throw new ListeningSessionNotFoundException("Invalid start session or listening type, cannot be found");
