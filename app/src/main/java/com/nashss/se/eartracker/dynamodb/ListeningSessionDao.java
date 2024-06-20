@@ -121,11 +121,11 @@ public class ListeningSessionDao {
             throw new ListeningSessionNotFoundException("error: Missing email, cannot find Listening Session. ");
         }
         if (listeningType == null){
-            throw new ListeningSessionNotFoundException("error: Missing listeningType String, cannot find Listening Session. ");
+            throw new ListeningSessionNotFoundException("error: Missing listeningType String, cannot find Listening Session.");
         }
 
         Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put("email", new AttributeValue(email));
+        valueMap.put(":email", new AttributeValue(email));
         valueMap.put(":listeningType", new AttributeValue(listeningType));
 
 

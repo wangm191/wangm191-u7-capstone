@@ -1,7 +1,5 @@
 package com.nashss.se.eartracker.activity.request;
 
-import java.time.LocalDateTime;
-
 public class GetListeningSessionByTypeRequest {
     private final String email;
     private final String listeningType;

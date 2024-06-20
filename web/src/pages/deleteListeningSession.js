@@ -3,12 +3,11 @@ import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
-class EditListeningSession extends BindingClass {
+class DeleteListeningSession extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewListeningSession'], this)
+        this.bindClassMethods(['mount', 'submit'], this)
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewListeningSession)
         this.header = new Header(this.dataStore);
 
         document.getElementById('delete').disabled = true;
@@ -58,18 +57,8 @@ class EditListeningSession extends BindingClass {
         
         this.dataStore.set('listeningSession', listeningSession);
         const successMessageDisplay = document.getElementById('success-message');
-        successMessageDisplay.innerText = 'Successfully edited listening session';
+        successMessageDisplay.innerText = 'Successfully deleted listening session';
         successMessageDisplay.classList.remove('hidden');
-    }
-
-    /**
-     * When the listening session is updated in the datastore, redirect to the view listening sessions page.
-     */
-    redirectToViewListeningSession() {
-        const listeningSession = this.dataStore.get('listeningSession');
-        if (listeningSession != null) {
-            window.location.href = `/viewListeningSession.html?id=${listeningSession}`;
-        }
     }
 
     redirectToMainMenu() {
@@ -81,8 +70,8 @@ class EditListeningSession extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const editListeningSession = new EditListeningSession();
-    editListeningSession.mount();
+    const deleteListeningSession = new DeleteListeningSession();
+    deleteListeningSession.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

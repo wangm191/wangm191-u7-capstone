@@ -208,6 +208,9 @@ Resources:
             - Effect: Allow
               Action: dynamodb:*
               Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions"
+            - Effect: Allow
+              Action: dynamodb:query
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions/index/EmailAndListeningTypeIndex"
         
         - PolicyName: 'AccessListeningTypeTable'
           PolicyDocument:
@@ -237,7 +240,7 @@ Resources:
         EarTrackerService:
           Type: Api
           Properties:
-            Path: /listeningSessions
+            Path: /listeningSessions/add
             Method: post
 
   DeleteListeningSessionLambda:
@@ -281,12 +284,12 @@ Resources:
             Method: put
 
 
-  GetListeningSessionsByDateLambda:
+  GetListeningSessionByDateLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: app
-      Handler: com.nashss.se.eartracker.lambda.GetListeningSessionsByDateLambda::handleRequest
+      Handler: com.nashss.se.eartracker.lambda.GetListeningSessionByDateLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -298,15 +301,15 @@ Resources:
         EarTrackerService:
           Type: Api
           Properties:
-            Path: /listeningSessions/{startSession}
+            Path: /listeningSessions/date/{startSession}
             Method: get
 
-  GetListeningSessionsByTypeLambda:
+  GetListeningSessionByTypeLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: app
-      Handler: com.nashss.se.eartracker.lambda.GetListeningSessionsByTypeLambda::handleRequest
+      Handler: com.nashss.se.eartracker.lambda.GetListeningSessionByTypeLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -318,7 +321,7 @@ Resources:
         EarTrackerService:
           Type: Api
           Properties:
-            Path: /listeningSessions/{listeningType}
+            Path: /listeningSessions/type/{listeningType}
             Method: get
               
 

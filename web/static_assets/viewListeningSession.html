@@ -12,24 +12,24 @@
     <div class="row">
         <div class="column">
             <h2 id="listeningSession-date-page">View Listening Sessions By Date</h2>
-            <form class="card-content" id="view-listeningSession-form">
+            <form class="card-content" id="view-listeningSession-by-date-form">
                 <p class="hidden error" id="error-message"></p>
                 <p class="form-field">
                     <label>Start Session</label>
                     <input type="datetime-local" step="1" required class="validated-field" id="startSession" placeholder="2024-06-10T12:59:59"
                     autofocus>
                 </p>
-                <a href="#" class="button" id="get-listeningSession-by-date">Submit</a>
+            </form>
+                <a href="#" class="button" id="search-listeningSession-by-date">Search</a>
                 <hr>
                 <div id="listeningSessionsByDate"></div>
-            </form>
         </div>
     </div>
 </div>
 <div class="card">
     <div class="row">
         <div class="column">
-            <h2 id="listeningSession-by-type">View Listening Sessions By Type </h2>
+            <h2 id="listeningSession-type-page">View Listening Sessions By Type </h2>
             <form class="card-content" id="view-listeningSession-by-type-form">
                 <p class="hidden error" id="error-message"></p>
                 <p class="form-field">
@@ -37,19 +37,17 @@
                     <input type="text" required class="validated-field" id="listeningType" placeholder="Zoom"
                     autofocus>
                 </p>
-                <a href="#" class="button" id="get-listeningSession-by-type">Submit</a>
+            </form>
+                <a href="#" class="button" id="search-listeningSession-by-type">Search</a>
                 <hr>
                 <div id="listeningSessionsByType"></div>
-            </form>
         </div>
     </div>
 </div>
 <div class="card">
-    <form class="card-content" id="back-form">
      <p>
         <a href="#" class="button" id="back">Back to main menu</a>
     </p>
-    </form>
 </div>
 
 

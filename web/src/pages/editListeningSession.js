@@ -6,9 +6,8 @@ import DataStore from '../util/DataStore';
 class EditListeningSession extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewListeningSession'], this)
+        this.bindClassMethods(['mount', 'submit'], this)
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewListeningSession)
         this.header = new Header(this.dataStore);
 
         document.getElementById('edit').disabled = true;
@@ -63,16 +62,6 @@ class EditListeningSession extends BindingClass {
         const successMessageDisplay = document.getElementById('success-message');
         successMessageDisplay.innerText = 'Successfully edited listening session';
         successMessageDisplay.classList.remove('hidden');
-    }
-
-    /**
-     * When the listening session is updated in the datastore, redirect to the view listening sessions page.
-     */
-    redirectToViewListeningSession() {
-        const listeningSession = this.dataStore.get('listeningSession');
-        if (listeningSession != null) {
-            window.location.href = `/viewListeningSession.html?id=${listeningSession}`;
-        }
     }
 
     redirectToMainMenu() {
