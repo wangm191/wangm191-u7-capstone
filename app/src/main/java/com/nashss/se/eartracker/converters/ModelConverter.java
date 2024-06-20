@@ -24,6 +24,7 @@ public class ModelConverter {
                 .withStartSession(listeningSession.getStartSession())
                 .withEndSession(listeningSession.getEndSession())
                 .withListeningType(listeningSession.getListeningType())
+                .withTimeElapsed(listeningSession.getTimeElapsed())
                 .withNotes(listeningSession.getNotes())
                 .build();
     }

@@ -25,7 +25,7 @@ public class GetListeningSessionByTypeLambda
                 () -> input.fromPathAndQuery((path, query) ->
                         GetListeningSessionByTypeRequest.builder()
                                 .withEmail(emailRequest.getEmail())
-                                .withListeningType(path.get("startSession"))
+                                .withListeningType(path.get("listeningType"))
                                 .build()),
                 (request, serviceComponent) ->
                         serviceComponent.provideGetListeningSessionByTypeActivity().handleRequest(request)
