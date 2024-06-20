@@ -1,16 +1,17 @@
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
-    --primary-color: #5D5E5E;
-    --secondary-color: #ffffff;
-    --tertiary-color: #F5881F;
+    --primary-color: #4169E1;
+    --secondary-color: #f5fffa;
+    --tertiary-color: #1f7ff5;
     --error-color: #EE3A23;
+    --success-color: #0ec94f;
 }
 
 .background {
-    background-color: #8A8C8F;
+    background-color: var(--secondary-color);
     margin: 0;
     counter-reset: section;
-    font-family: "Helvetica Neue",Helvetica,sans-serif;
+    font-family: "Gill Sans", sans-serif;
 }
 
 .header {
@@ -27,7 +28,8 @@
   background-color: var(--tertiary-color);
   border: none;
   color: var(--secondary-color);
-  padding: 6px 8px 4px 8px;
+  padding: 8px 10px 6px 10px;
+  border-radius: 2px;
   text-align: center;
   font-weight: bold;
   text-decoration: none;
@@ -39,12 +41,35 @@
     justify-content: space-between;
 }
 
+.submit {
+    background-color: var(--tertiary-color);
+    border: none;
+    margin-left: 338px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    padding: 8px 10px 6px 10px;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
 .header_home {
     font-size: 36px;
     line-height: 40px;
     height: 100px;
     text-decoration: none;
     color: var(--secondary-color);
+}
+
+.title {
+    margin: 140px;
+    font-size: 50px;
+    text-align: center;
 }
 
 .card {
@@ -61,8 +86,8 @@
 }
 
 .success {
-    color: green;
-    border: 1px solid green;
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
     padding: 8px;
 }
 
@@ -80,9 +105,11 @@
 .card-content .form-field {
     display: flex;
     flex-direction: column;
+    font-weight: 500;
 }
 
-.tags {
+
+/* .tags {
     display: flex;
     flex-direction: row;
 }
@@ -95,9 +122,9 @@
     color: var(--secondary-color);
     position: relative;
     border-radius: 16px;
-}
+} */
 
-.song {
+/* .song {
     padding: 2px;
     display: flex;
 }
@@ -108,19 +135,19 @@
 
 .song .album {
     flex: 80%;
-}
+} */
 
 /*
 Flexbox on a lists removes the numbers. We use a counter here to add them back.
 https://stackoverflow.com/a/34316093
 https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
 */
-.song:before {
+/* .song:before {
     counter-increment: section;
     content: counter(section) ".";
     position: absolute;
     margin-left: -40px;
-}
+} */
 
 .hidden {
     display: none;
