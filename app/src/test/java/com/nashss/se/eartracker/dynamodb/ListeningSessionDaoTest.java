@@ -91,7 +91,7 @@ public class ListeningSessionDaoTest {
     }
 
     @Test
-    public void saveTracker_callsMapperWithListeningSession() {
+    public void saveListeningSession_callsMapperWithListeningSession() {
         // GIVEN
         ListeningSession listeningSession = new ListeningSession();
 
@@ -100,6 +100,19 @@ public class ListeningSessionDaoTest {
 
         // THEN
         verify(dynamoDbMapper).save(listeningSession);
+        assertEquals(listeningSession, result);
+    }
+
+    @Test
+    public void deleteListeningSession_callsMapperWithListeningSession() {
+        // GIVEN
+        ListeningSession listeningSession = new ListeningSession();
+
+        // WHEN
+        ListeningSession result = listeningSessionDao.deleteListeningSession(listeningSession);
+
+        // THEN
+        verify(dynamoDbMapper).delete(listeningSession);
         assertEquals(listeningSession, result);
     }
 

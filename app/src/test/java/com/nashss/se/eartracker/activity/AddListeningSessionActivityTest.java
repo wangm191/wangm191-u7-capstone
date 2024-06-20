@@ -42,7 +42,6 @@ public class AddListeningSessionActivityTest {
         LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
         LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
         String listeningType = "Spotify";
-//        String timeElapsed = "3:29:15";
         String notes = "";
 
         AddListeningSessionRequest request = AddListeningSessionRequest.builder()
@@ -63,7 +62,6 @@ public class AddListeningSessionActivityTest {
         assertEquals(startSession, result.getListeningSessionModel().getStartSession());
         assertEquals(endSession, result.getListeningSessionModel().getEndSession());
         assertEquals(listeningType, result.getListeningSessionModel().getListeningType());
-//        assertEquals(timeElapsed, result.getListeningSessionModel().getTimeElapsed());
         assertEquals(notes, result.getListeningSessionModel().getNotes());
     }
 
