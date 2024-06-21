@@ -1,11 +1,9 @@
 package com.nashss.se.eartracker.activity;
 
-import com.nashss.se.eartracker.activity.request.AddListeningSessionRequest;
 import com.nashss.se.eartracker.activity.request.DeleteListeningSessionRequest;
 import com.nashss.se.eartracker.activity.result.DeleteListeningSessionResult;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
-import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
 import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,12 +29,11 @@ public class DeleteListeningSessionActivityTest {
     }
 
     @Test
-    void handleRequest_validRequest_deletesTracker() {
+    void handleRequest_validRequest_deletesListeningSession() {
         // GIVEN
         String email = "validEmail@email.com";
         LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
         LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
-
         String listeningType = "Spotify";
 
         ListeningSession listeningSession = new ListeningSession();
@@ -64,7 +61,7 @@ public class DeleteListeningSessionActivityTest {
     }
 
     @Test
-    void handleRequest_invalidEmail_throwsInvalidAttributeException() {
+    void handleRequest_nullEmail_throwsInvalidAttributeException() {
         // GIVEN
         DeleteListeningSessionRequest request = DeleteListeningSessionRequest.builder()
                 .withEmail(null)

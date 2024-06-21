@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class TimeElapsedCalculatorTest {
@@ -27,9 +28,15 @@ public class TimeElapsedCalculatorTest {
 
         // WHEN
         String result = timeElapsedCalculator.handleRequest(startSession, endSession);
-        System.out.println(result);
 
         // THEN
         assertEquals(timeElapsed, result);
+    }
+
+    @Test
+    public void handleRequest_nullLocalDateTime_throwsNullPointerException(){
+
+        // WHEN + THEN
+        assertThrows(NullPointerException.class, () -> timeElapsedCalculator.handleRequest(null, null));
     }
 }
