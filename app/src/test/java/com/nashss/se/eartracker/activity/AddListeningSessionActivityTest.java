@@ -78,14 +78,13 @@ public class AddListeningSessionActivityTest {
         // WHEN
         AddListeningSessionResult result = addListeningSessionActivity.handleRequest(request);
 
-        // THEN
         verify(listeningSessionDao).saveListeningSession(any(ListeningSession.class));
 
         assertEquals(email, result.getListeningSessionModel().getEmail());
         assertEquals(startSession, result.getListeningSessionModel().getStartSession());
         assertEquals(endSession, result.getListeningSessionModel().getEndSession());
         assertEquals(listeningType, result.getListeningSessionModel().getListeningType());
-        assertNull(result.getListeningSessionModel().getNotes());
+        assertEquals("", result.getListeningSessionModel().getNotes());
     }
 
     @Test

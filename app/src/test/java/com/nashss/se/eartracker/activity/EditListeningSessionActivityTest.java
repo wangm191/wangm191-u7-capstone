@@ -2,6 +2,7 @@ package com.nashss.se.eartracker.activity;
 
 import com.nashss.se.eartracker.activity.request.EditListeningSessionRequest;
 import com.nashss.se.eartracker.activity.result.EditListeningSessionResult;
+import com.nashss.se.eartracker.converters.ModelConverter;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
 import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
@@ -21,7 +22,6 @@ public class EditListeningSessionActivityTest {
     @Mock
     private  ListeningSessionDao listeningSessionDao;
 
-    @Mock
     private EditListeningSessionActivity editListeningSessionActivity;
 
     @BeforeEach
@@ -57,9 +57,8 @@ public class EditListeningSessionActivityTest {
 //        when(listeningSessionDao.getListeningSession(startingListeningSession.getEmail(), startingListeningSession.getStartSession())).thenReturn(startingListeningSession);
 //        when(listeningSessionDao.saveListeningSession(startingListeningSession)).thenReturn(startingListeningSession);
 //
-//        //doReturn(startSession). when(listeningSessionDao.getListeningSession(startingListeningSession.getEmail(), startingListeningSession.getStartSession()));
-//
 //        // WHEN
+//        when(editListeningSessionActivity.handleRequest(request)).thenReturn(any(EditListeningSessionResult.class));
 //        EditListeningSessionResult result = editListeningSessionActivity.handleRequest(request);
 //
 //        // THEN
