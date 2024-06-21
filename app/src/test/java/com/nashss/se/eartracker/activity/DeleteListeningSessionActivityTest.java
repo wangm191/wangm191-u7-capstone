@@ -36,7 +36,6 @@ public class DeleteListeningSessionActivityTest {
         String email = "validEmail@email.com";
         LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
         LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
-
         String listeningType = "Spotify";
 
         ListeningSession listeningSession = new ListeningSession();
@@ -64,7 +63,7 @@ public class DeleteListeningSessionActivityTest {
     }
 
     @Test
-    void handleRequest_invalidEmail_throwsInvalidAttributeException() {
+    void handleRequest_nullEmail_throwsInvalidAttributeException() {
         // GIVEN
         DeleteListeningSessionRequest request = DeleteListeningSessionRequest.builder()
                 .withEmail(null)

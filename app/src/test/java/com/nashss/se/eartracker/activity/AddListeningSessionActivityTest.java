@@ -66,12 +66,39 @@ public class AddListeningSessionActivityTest {
     }
 
     @Test
-    public void handleRequest_invalidEmail_throwsInvalidAttributeValueException(){
+    public void handleRequest_nullNotes_AddsListeningSession(){
         // GIVEN
-        String invalidEmail = "'InvalidEmail'";
+        String email = "validEmail@email.com";
+        LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
+        LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
+        String listeningType = "Spotify";
 
         AddListeningSessionRequest request = AddListeningSessionRequest.builder()
-                .withEmail(invalidEmail)
+                .withEmail(email)
+                .withStartSession(startSession)
+                .withEndSession(endSession)
+                .withListeningType(listeningType)
+                .withNotes(null)
+                .build();
+
+        // WHEN
+        AddListeningSessionResult result = addListeningSessionActivity.handleRequest(request);
+
+        // THEN
+        verify(listeningSessionDao).saveListeningSession(any(ListeningSession.class));
+
+        assertEquals(email, result.getListeningSessionModel().getEmail());
+        assertEquals(startSession, result.getListeningSessionModel().getStartSession());
+        assertEquals(endSession, result.getListeningSessionModel().getEndSession());
+        assertEquals(listeningType, result.getListeningSessionModel().getListeningType());
+        assertNull(result.getListeningSessionModel().getNotes());
+    }
+
+    @Test
+    public void handleRequest_nullEmail_throwsInvalidAttributeValueException(){
+
+        AddListeningSessionRequest request = AddListeningSessionRequest.builder()
+                .withEmail(null)
                 .build();
 
         // WHEN + THEN

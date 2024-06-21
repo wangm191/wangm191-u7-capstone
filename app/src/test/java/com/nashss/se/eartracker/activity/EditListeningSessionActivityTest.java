@@ -37,14 +37,25 @@ public class EditListeningSessionActivityTest {
     }
 
 //    @Test
-//    void handleRequest_validRequest_updatesTracker() {
+//    void handleRequest_validRequestNewStartSession_updatesTracker() {
 //        // GIVEN
 //        String email = "validEmail@email.com";
 //        LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
 //        LocalDateTime newStartSession = LocalDateTime.of(2024, 6, 4, 10,10,10);
 //        LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
 //        String listeningType = "Spotify";
-//        String notes ="";
+//        String notes ="Gym Session";
+//
+//        ListeningSession listeningSession = new ListeningSession();
+//        listeningSession.setEmail(email);
+//        listeningSession.setStartSession(startSession);
+//        listeningSession.setEndSession(endSession);
+//        listeningSession.setListeningType(listeningType);
+//        listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(startSession, endSession));
+//        listeningSession.setNotes(notes);
+//
+//        when(listeningSessionDao.getListeningSession(listeningSession.getEmail(), listeningSession.getStartSession())).thenReturn(listeningSession);
+//        when(listeningSessionDao.saveListeningSession(listeningSession)).thenReturn(listeningSession);
 //
 //        EditListeningSessionRequest request = EditListeningSessionRequest.builder()
 //                .withEmail(email)
@@ -59,15 +70,15 @@ public class EditListeningSessionActivityTest {
 //        EditListeningSessionResult result = editListeningSessionActivity.handleRequest(request);
 //
 //        // THEN
-//        assertEquals(email, result.getListeningSession().getEmail());
+//        assertEquals(listeningSession.getEmail(), result.getListeningSession().getEmail());
 //        assertEquals(newStartSession, result.getListeningSession().getStartSession());
-//        assertEquals(endSession, result.getListeningSession().getEndSession());
-//        assertEquals(listeningType, result.getListeningSession().getListeningType());
-//        assertEquals(notes, request.getNotes());
+//        assertEquals(listeningSession.getEndSession(), result.getListeningSession().getEndSession());
+//        assertEquals(listeningSession.getListeningType(), result.getListeningSession().getListeningType());
+//        assertEquals(listeningSession.getNotes(), request.getNotes());
 //    }
 
     @Test
-    void handleRequest_invalidEmail_throwsInvalidAttributeException() {
+    void handleRequest_nullEmail_throwsInvalidAttributeException() {
         // GIVEN
         EditListeningSessionRequest request = EditListeningSessionRequest.builder()
                 .withEmail(null)
