@@ -1,23 +1,20 @@
 package com.nashss.se.eartracker.activity;
 
-import com.nashss.se.eartracker.activity.request.DeleteListeningSessionRequest;
 import com.nashss.se.eartracker.activity.request.EditListeningSessionRequest;
-import com.nashss.se.eartracker.activity.result.DeleteListeningSessionResult;
 import com.nashss.se.eartracker.activity.result.EditListeningSessionResult;
-import com.nashss.se.eartracker.calculator.TimeElapsedCalculator;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
 import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
-import com.nashss.se.eartracker.exceptions.ListeningSessionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class EditListeningSessionActivityTest {
@@ -25,56 +22,50 @@ public class EditListeningSessionActivityTest {
     private  ListeningSessionDao listeningSessionDao;
 
     @Mock
-    private TimeElapsedCalculator timeElapsedCalculator;
-
     private EditListeningSessionActivity editListeningSessionActivity;
 
     @BeforeEach
     void setup() {
         openMocks(this);
         editListeningSessionActivity = new EditListeningSessionActivity(listeningSessionDao);
-        timeElapsedCalculator = new TimeElapsedCalculator();
     }
 
 //    @Test
-//    void handleRequest_validRequestNewStartSession_updatesTracker() {
+//    void handleRequest_validRequest_updatesListeningSession() {
 //        // GIVEN
 //        String email = "validEmail@email.com";
 //        LocalDateTime startSession = LocalDateTime.of(2024, 6, 4, 12, 30, 30);
-//        LocalDateTime newStartSession = LocalDateTime.of(2024, 6, 4, 10,10,10);
+//        LocalDateTime newStartSession = LocalDateTime.of(2024, 6, 4, 13,  45, 45);
 //        LocalDateTime endSession = LocalDateTime.of(2024, 6, 4, 15, 59, 45);
 //        String listeningType = "Spotify";
-//        String notes ="Gym Session";
-//
-//        ListeningSession listeningSession = new ListeningSession();
-//        listeningSession.setEmail(email);
-//        listeningSession.setStartSession(startSession);
-//        listeningSession.setEndSession(endSession);
-//        listeningSession.setListeningType(listeningType);
-//        listeningSession.setTimeElapsed(timeElapsedCalculator.handleRequest(startSession, endSession));
-//        listeningSession.setNotes(notes);
-//
-//        when(listeningSessionDao.getListeningSession(listeningSession.getEmail(), listeningSession.getStartSession())).thenReturn(listeningSession);
-//        when(listeningSessionDao.saveListeningSession(listeningSession)).thenReturn(listeningSession);
+//        String newListeningType = "Zoom";
 //
 //        EditListeningSessionRequest request = EditListeningSessionRequest.builder()
 //                .withEmail(email)
 //                .withStartSession(startSession)
 //                .withNewStartSession(newStartSession)
 //                .withEndSession(endSession)
-//                .withListeningType(listeningType)
-//                .withNotes(notes)
+//                .withListeningType(newListeningType)
 //                .build();
+//
+//        ListeningSession startingListeningSession = new ListeningSession();
+//        startingListeningSession.setEmail(email);
+//        startingListeningSession.setStartSession(startSession);
+//        startingListeningSession.setEndSession(endSession);
+//        startingListeningSession.setListeningType(listeningType);
+//
+//        when(listeningSessionDao.getListeningSession(startingListeningSession.getEmail(), startingListeningSession.getStartSession())).thenReturn(startingListeningSession);
+//        when(listeningSessionDao.saveListeningSession(startingListeningSession)).thenReturn(startingListeningSession);
+//
+//        //doReturn(startSession). when(listeningSessionDao.getListeningSession(startingListeningSession.getEmail(), startingListeningSession.getStartSession()));
 //
 //        // WHEN
 //        EditListeningSessionResult result = editListeningSessionActivity.handleRequest(request);
 //
 //        // THEN
-//        assertEquals(listeningSession.getEmail(), result.getListeningSession().getEmail());
+//        assertEquals(startingListeningSession.getEmail(), result.getListeningSession().getEmail());
 //        assertEquals(newStartSession, result.getListeningSession().getStartSession());
-//        assertEquals(listeningSession.getEndSession(), result.getListeningSession().getEndSession());
-//        assertEquals(listeningSession.getListeningType(), result.getListeningSession().getListeningType());
-//        assertEquals(listeningSession.getNotes(), request.getNotes());
+//        assertEquals(newListeningType, result.getListeningSession().getListeningType());
 //    }
 
     @Test

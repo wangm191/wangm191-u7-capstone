@@ -1,7 +1,6 @@
 package com.nashss.se.eartracker.activity;
 
 import com.nashss.se.eartracker.activity.request.GetListeningSessionByDateRequest;
-import com.nashss.se.eartracker.activity.request.GetListeningSessionByTypeRequest;
 import com.nashss.se.eartracker.activity.result.GetListeningSessionByDateResult;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;

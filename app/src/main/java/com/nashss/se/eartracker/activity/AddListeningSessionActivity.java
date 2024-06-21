@@ -4,7 +4,6 @@ import com.nashss.se.eartracker.activity.request.AddListeningSessionRequest;
 import com.nashss.se.eartracker.activity.result.AddListeningSessionResult;
 import com.nashss.se.eartracker.calculator.TimeElapsedCalculator;
 import com.nashss.se.eartracker.converters.ModelConverter;
-import com.nashss.se.eartracker.dependency.ServiceComponent;
 import com.nashss.se.eartracker.dynamodb.ListeningSessionDao;
 import com.nashss.se.eartracker.dynamodb.models.ListeningSession;
 import com.nashss.se.eartracker.exceptions.InvalidAttributeValueException;
