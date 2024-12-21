@@ -57,7 +57,7 @@ Resources:
             Priority: 1
       UsernameAttributes:
         - email
-      UsernameConfiguration: 
+      UsernameConfiguration:
         CaseSensitive: false
       AutoVerifiedAttributes:
         - email
@@ -80,15 +80,15 @@ Resources:
       CallbackURLs:
         - http://localhost:8000
         - !If
-            - DeployCloudFront
-            - !Sub "https://${CloudfrontDistribution.DomainName}"
-            - !Ref "AWS::NoValue"
+          - DeployCloudFront
+          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Ref "AWS::NoValue"
       LogoutURLs:
         - http://localhost:8000
         - !If
-            - DeployCloudFront
-            - !Sub "https://${CloudfrontDistribution.DomainName}"
-            - !Ref "AWS::NoValue"
+          - DeployCloudFront
+          - !Sub "https://${CloudfrontDistribution.DomainName}"
+          - !Ref "AWS::NoValue"
       AllowedOAuthFlows:
         - code
         - implicit
@@ -180,8 +180,8 @@ Resources:
         - 'arn:aws:iam::aws:policy/service-role/AWSLambdaRole'
         - 'arn:aws:iam::aws:policy/AWSLambdaExecute'
       AssumeRolePolicyDocument:
-        Version: "2012-10-17" 
-        Statement: 
+        Version: "2012-10-17"
+        Statement:
           - Effect: Allow
             Principal:
               Service:
@@ -193,32 +193,32 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-            - Effect: Allow
-              Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                - cloudwatch:PutMetricData
-              Resource: '*'
-                
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - cloudwatch:PutMetricData
+                Resource: '*'
+
         - PolicyName: 'AccessListeningSessionsTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-            - Effect: Allow
-              Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions"
-            - Effect: Allow
-              Action: dynamodb:query
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions/index/EmailAndListeningTypeIndex"
-        
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions"
+              - Effect: Allow
+                Action: dynamodb:query
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningSessions/index/EmailAndListeningTypeIndex"
+
         - PolicyName: 'AccessListeningTypeTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-            - Effect: Allow
-              Action: dynamodb:*
-              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningTypes"
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/listeningTypes"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
@@ -323,194 +323,194 @@ Resources:
           Properties:
             Path: /listeningSessions/type/{listeningType}
             Method: get
-              
 
-#  SearchPlaylistsLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.SearchPlaylistsLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /playlists/search
-#            Method: get
-#            Auth:
-#              Authorizer: 'NONE'
-#
-#  GetPlaylistSongsLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.GetPlaylistSongsLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /playlists/{id}/songs
-#            Method: get
-#            Auth:
-#              Authorizer: 'NONE'
-#
-#  CreatePlaylistLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.CreatePlaylistLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /playlists
-#            Method: post
-#
-#  UpdatePlaylistLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.UpdatePlaylistLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /playlists/{id}
-#            Method: put
-#
-#  AddSongToPlaylistLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.AddSongToPlaylistLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /playlists/{id}/songs
-#            Method: post
-#
-#  SetFinanceTargetLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.SetFinanceTargetLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /hub/target
-#            Method: post
-#
-#  DeleteFinanceTargetLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.DeleteFinanceTargetLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /hub/target/delete
-#            Method: DELETE
-#
-#
-#
-#
-#  CompareJobTypesLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.eartracker.lambda.CompareJobTypesLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /hub/tracker/compare/{date}
-#            Method: get
-#
-#  DeleteTrackerLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.DeleteTrackerLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /hub/tracker/delete
-#            Method: delete
+
+  #  SearchPlaylistsLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.SearchPlaylistsLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /playlists/search
+  #            Method: get
+  #            Auth:
+  #              Authorizer: 'NONE'
+  #
+  #  GetPlaylistSongsLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.GetPlaylistSongsLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /playlists/{id}/songs
+  #            Method: get
+  #            Auth:
+  #              Authorizer: 'NONE'
+  #
+  #  CreatePlaylistLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.CreatePlaylistLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /playlists
+  #            Method: post
+  #
+  #  UpdatePlaylistLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.UpdatePlaylistLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /playlists/{id}
+  #            Method: put
+  #
+  #  AddSongToPlaylistLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.AddSongToPlaylistLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /playlists/{id}/songs
+  #            Method: post
+  #
+  #  SetFinanceTargetLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.SetFinanceTargetLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /hub/target
+  #            Method: post
+  #
+  #  DeleteFinanceTargetLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.DeleteFinanceTargetLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /hub/target/delete
+  #            Method: DELETE
+  #
+  #
+  #
+  #
+  #  CompareJobTypesLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.eartracker.lambda.CompareJobTypesLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /hub/tracker/compare/{date}
+  #            Method: get
+  #
+  #  DeleteTrackerLambda:
+  #    Type: AWS::Serverless::Function
+  #    Properties:
+  #      Role: !GetAtt AccessRole.Arn
+  #      CodeUri: MusicPlaylistServiceLambda
+  #      Handler: com.nashss.se.musicplaylistservice.lambda.DeleteTrackerLambda::handleRequest
+  #      Runtime: java11
+  #      Architectures:
+  #        - x86_64
+  #      MemorySize: 512
+  #      Environment:
+  #        Variables:
+  #          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+  #      Events:
+  #        MusicPlaylistService:
+  #          Type: Api
+  #          Properties:
+  #            Path: /hub/tracker/delete
+  #            Method: delete
 
 
   #-----------------------------------------------------
@@ -591,5 +591,3 @@ Outputs:
     Description: "The URL of the deployed front-end application (COGNITO_REDIRECT_SIGNOUT)."
     Value: !Sub "https://${CloudfrontDistribution.DomainName}"
     Condition: DeployCloudFront
-
-
