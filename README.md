@@ -19,9 +19,14 @@ This application allows the users to store, track, and analyze their listening a
 - Cognito Login Access Management
 
 ### Main Page
-Home landing page for the application, choices of `Add Listening Session`, `Edit Listening Session`, `Delete Listening Session` and `View Listening Session`.
+Home landing page for the application, choices of `Add Listening Session`, `Edit Listening Session`, `Delete Listening Session` and `View Listening Session`, as well as login and logout user access functions.
 
 ![EarTrackerMainPage.png](ImagesREADME%2FEarTrackerMainPage.png)
+
+### Cognito Access Management
+AWS Technology that links user with their data, uses an email address + password as the login ID key matching user to their accounts.
+
+![CognitoLoginExample.png](ImagesREADME%2FCognitoLoginExample.png)
 
 ### Add Listening Session
 Adds a new `Listening Session` datapoint into the database. 
@@ -48,7 +53,7 @@ Using java.lang.object LocalDateTime as date variable, Front-End uses calendar m
 
 ![DateExample.png](ImagesREADME%2FDateExample.png)
 
-### DynamoDb Database 
-DynamoDb is the database that stores all of the `Listening Session` datapoints, when called by the other API endpoints will pull datapoints from the dynamoDb table and modify/display accordingly. 
+### DynamoDb Database Tables 
+DynamoDb is an AWS technology that stores all of the `Listening Session` data-points in a structured database, and when called upon will pull the data-points from the database table to the API for the user. 
 
 ![DynamoDbExample.png](ImagesREADME%2FDynamoDbExample.png)
